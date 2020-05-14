@@ -1,3 +1,7 @@
 a.out
 .o
 camu
+ca_mu.tab.c
+ca_mu.tab.h
+lex.yy.c
+
