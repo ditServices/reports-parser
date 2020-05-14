@@ -12,12 +12,12 @@ date             = "_auto"
 reel: A001
   scene: 23/22a
     slate: 001
-      1-2, 50MM, T1.8, {ND.3}
+      1, 50MM, T1.8, { ND.3 }
       3AFS,   50MM, T1.8, {ND.3}
-    slate: 002:
+    slate: 002
       1,  65MM, T1.8, {ND.3 BPM1/2}
-    slate: 003:
-      1-3, 24MM, T1.9 {ND.3}
+    slate: 003
+      1-3, 24MM, T1.9, {ND.3}
 
 reel: A002
   scene: 23/22a

@@ -63,11 +63,20 @@ extern int yydebug;
     CODEC = 264,                   /* CODEC  */
     DATE = 265,                    /* DATE  */
     EQUALS = 266,                  /* EQUALS  */
-    COLON = 267,                   /* COLON  */
-    REEL = 268,                    /* REEL  */
-    REEL_ID = 269,                 /* REEL_ID  */
-    META = 270,                    /* META  */
-    AUTO = 271                     /* AUTO  */
+    SEP = 267,                     /* SEP  */
+    COLON = 268,                   /* COLON  */
+    REEL = 269,                    /* REEL  */
+    REEL_ID = 270,                 /* REEL_ID  */
+    META = 271,                    /* META  */
+    AUTO = 272,                    /* AUTO  */
+    SCENE = 273,                   /* SCENE  */
+    SCENE_ID = 274,                /* SCENE_ID  */
+    SLATE = 275,                   /* SLATE  */
+    SLATE_ID = 276,                /* SLATE_ID  */
+    TAKE = 277,                    /* TAKE  */
+    LENS = 278,                    /* LENS  */
+    STOP = 279,                    /* STOP  */
+    FILTERS = 280                  /* FILTERS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -84,11 +93,20 @@ extern int yydebug;
 #define CODEC 264
 #define DATE 265
 #define EQUALS 266
-#define COLON 267
-#define REEL 268
-#define REEL_ID 269
-#define META 270
-#define AUTO 271
+#define SEP 267
+#define COLON 268
+#define REEL 269
+#define REEL_ID 270
+#define META 271
+#define AUTO 272
+#define SCENE 273
+#define SCENE_ID 274
+#define SLATE 275
+#define SLATE_ID 276
+#define TAKE 277
+#define LENS 278
+#define STOP 279
+#define FILTERS 280
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

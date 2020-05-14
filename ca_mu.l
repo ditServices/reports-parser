@@ -20,6 +20,7 @@
 
 "reel"              return REEL;
 "scene"             return SCENE;
+"slate"             return SLATE;
 
 "exit"              exit(EXIT_SUCCESS);
 "END"               {
@@ -27,16 +28,24 @@
                       exit(EXIT_SUCCESS);
                     }
 
-\"[^"\n]*["\n]      return META;
-[aA-aZ][0-9]+       return REEL_ID;
-[]                  return SCENE_ID;
+\"[^"\n]*["\n]              return META;
+[aA-aZ][0-9]+               return REEL_ID;
+([0-9aA-zZ]*\/[0-9aA-zZ]*)  return SCENE_ID;
+[0-9]+                      return SLATE_ID;
+[0-9][aA-zZ]+               return TAKE;
+[0-9]+MM                    return LENS;
+T[0-9]\.[0-9]+              return STOP;
+"{"([^}]*)"}"                 return FILTERS;
 
 =                   return EQUALS;
 :                   return COLON;
+,                   return SEP;
 
 [ \t\n]                     ;
 "/*"([^*]|\*+[^*/])*\*+"/"  ;
-.                   printf("unrecognized input: %s\n", yytext);
+
+ .                   printf("unrecognized input: %s\n", yytext);
+
 %%
 
 int yywrap(void) {
