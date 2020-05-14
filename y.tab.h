@@ -76,7 +76,8 @@ extern int yydebug;
     TAKE = 277,                    /* TAKE  */
     LENS = 278,                    /* LENS  */
     STOP = 279,                    /* STOP  */
-    FILTERS = 280                  /* FILTERS  */
+    FILTERS = 280,                 /* FILTERS  */
+    MULTI_T = 281                  /* MULTI_T  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -107,6 +108,7 @@ extern int yydebug;
 #define LENS 278
 #define STOP 279
 #define FILTERS 280
+#define MULTI_T 281
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

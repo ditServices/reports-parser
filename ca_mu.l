@@ -33,9 +33,10 @@
 ([0-9aA-zZ]*\/[0-9aA-zZ]*)  return SCENE_ID;
 [0-9]+                      return SLATE_ID;
 [0-9][aA-zZ]+               return TAKE;
+[0-9]+-[0-9]+               return MULTI_T;
 [0-9]+MM                    return LENS;
 T[0-9]\.[0-9]+              return STOP;
-"{"([^}]*)"}"                 return FILTERS;
+"{"([^}]*)"}"               return FILTERS;
 
 =                   return EQUALS;
 :                   return COLON;

@@ -8,7 +8,7 @@ extern int yylineno;
 %locations
 %token PROD_TITL _DIR DOP DIT FORMAT CAMERA CODEC DATE EQUALS SEP
 %token COLON REEL REEL_ID META AUTO SCENE SCENE_ID SLATE SLATE_ID
-%token TAKE LENS STOP FILTERS
+%token TAKE LENS STOP FILTERS MULTI_T
 
 %%
 
@@ -43,6 +43,7 @@ data: META
     | SCENE_ID
     | SLATE_ID
     | TAKE
+    | MULTI_T
     | LENS
     | STOP
     | FILTERS
