@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_Y_TAB_H_INCLUDED
-# define YY_YY_Y_TAB_H_INCLUDED
+#ifndef YY_YY_CA_MU_TAB_H_INCLUDED
+# define YY_YY_CA_MU_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -81,38 +81,10 @@ extern int yydebug;
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Token kinds.  */
-#define YYEOF 0
-#define YYerror 256
-#define YYUNDEF 257
-#define PROD_TITL 258
-#define _DIR 259
-#define DOP 260
-#define DIT 261
-#define FORMAT 262
-#define CAMERA 263
-#define CODEC 264
-#define DATE 265
-#define EQUALS 266
-#define SEP 267
-#define COLON 268
-#define REEL 269
-#define REEL_ID 270
-#define META 271
-#define AUTO 272
-#define SCENE 273
-#define SCENE_ID 274
-#define SLATE 275
-#define SLATE_ID 276
-#define TAKE 277
-#define LENS 278
-#define STOP 279
-#define FILTERS 280
-#define MULTI_T 281
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef char * YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -136,4 +108,4 @@ extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
 int yyparse (void);
 
-#endif /* !YY_YY_Y_TAB_H_INCLUDED  */
+#endif /* !YY_YY_CA_MU_TAB_H_INCLUDED  */

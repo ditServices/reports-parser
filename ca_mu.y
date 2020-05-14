@@ -5,6 +5,8 @@ void yyerror(char *s);
 extern int yylineno;
 %}
 
+%define api.value.type {char *}
+
 %locations
 %token PROD_TITL _DIR DOP DIT FORMAT CAMERA CODEC DATE EQUALS SEP
 %token COLON REEL REEL_ID META AUTO SCENE SCENE_ID SLATE SLATE_ID

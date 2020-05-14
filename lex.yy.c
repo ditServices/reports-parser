@@ -569,7 +569,7 @@ char *yytext;
 #line 2 "ca_mu.l"
 #include <stdio.h>
 #include <string.h>
-#include "y.tab.h"
+#include "ca_mu.tab.h"
 #line 574 "lex.yy.c"
 #line 575 "lex.yy.c"
 

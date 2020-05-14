@@ -74,7 +74,7 @@ int yylex();
 void yyerror(char *s);
 extern int yylineno;
 
-#line 78 "y.tab.c"
+#line 78 "ca_mu.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -99,8 +99,8 @@ extern int yylineno;
 
 /* Use api.header.include to #include this header
    instead of duplicating it here.  */
-#ifndef YY_YY_Y_TAB_H_INCLUDED
-# define YY_YY_Y_TAB_H_INCLUDED
+#ifndef YY_YY_CA_MU_TAB_H_INCLUDED
+# define YY_YY_CA_MU_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -145,38 +145,10 @@ extern int yydebug;
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Token kinds.  */
-#define YYEOF 0
-#define YYerror 256
-#define YYUNDEF 257
-#define PROD_TITL 258
-#define _DIR 259
-#define DOP 260
-#define DIT 261
-#define FORMAT 262
-#define CAMERA 263
-#define CODEC 264
-#define DATE 265
-#define EQUALS 266
-#define SEP 267
-#define COLON 268
-#define REEL 269
-#define REEL_ID 270
-#define META 271
-#define AUTO 272
-#define SCENE 273
-#define SCENE_ID 274
-#define SLATE 275
-#define SLATE_ID 276
-#define TAKE 277
-#define LENS 278
-#define STOP 279
-#define FILTERS 280
-#define MULTI_T 281
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef char * YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -200,7 +172,7 @@ extern YYSTYPE yylval;
 extern YYLTYPE yylloc;
 int yyparse (void);
 
-#endif /* !YY_YY_Y_TAB_H_INCLUDED  */
+#endif /* !YY_YY_CA_MU_TAB_H_INCLUDED  */
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -610,9 +582,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    15,    15,    16,    19,    20,    23,    24,    25,    26,
-      27,    28,    29,    30,    31,    32,    33,    36,    37,    38,
-      41,    42,    43,    44,    45,    46,    47,    48,    49
+       0,    17,    17,    18,    21,    22,    25,    26,    27,    28,
+      29,    30,    31,    32,    33,    34,    35,    38,    39,    40,
+      43,    44,    45,    46,    47,    48,    49,    50,    51
 };
 #endif
 
@@ -1324,19 +1296,19 @@ yyreduce:
   switch (yyn)
     {
   case 4:
-#line 19 "ca_mu.y"
+#line 21 "ca_mu.y"
                           {printf("metadata is valid.\n");}
-#line 1330 "y.tab.c"
+#line 1302 "ca_mu.tab.c"
     break;
 
   case 5:
-#line 20 "ca_mu.y"
+#line 22 "ca_mu.y"
                                        {printf("row data is valid\n");}
-#line 1336 "y.tab.c"
+#line 1308 "ca_mu.tab.c"
     break;
 
 
-#line 1340 "y.tab.c"
+#line 1312 "ca_mu.tab.c"
 
       default: break;
     }
@@ -1535,7 +1507,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 52 "ca_mu.y"
+#line 54 "ca_mu.y"
 
 
 int main(void) {

@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "y.tab.h"
+#include "ca_mu.tab.h"
 %}
 
 %option yylineno
