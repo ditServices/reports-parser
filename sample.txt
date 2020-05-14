@@ -1,0 +1,30 @@
+/* This is a comment */
+
+production_title = "My Production"
+director         = "Tom Smith"
+DOP              = "Tony Jones"
+DIT              = "Howard Colin"
+format           = "16:9"
+camera           = "Arri Alexa"
+codec            = "ProRes"
+date             = "_auto"
+
+reel: A001
+  scene: 23/22a
+    slate: 001
+      1-2, 50MM, T1.8, {ND.3}
+      3AFS,   50MM, T1.8, {ND.3}
+    slate: 002:
+      1,  65MM, T1.8, {ND.3 BPM1/2}
+    slate: 003:
+      1-3, 24MM, T1.9 {ND.3}
+
+reel: A002
+  scene: 23/22a
+    slate: 004
+      1-5, 32MM, T1.9, {ND.3}
+  scene: 23/21
+    slate: 005
+      1, 100MM, T1.9, {ND.6}
+
+END
