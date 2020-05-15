@@ -18,7 +18,7 @@ input: input metadata
      | metadata
      ;
 
-metadata: command op data {printf("metadata is valid.\n");}
+metadata: command op data {printf("%s is valid.\n", $3);}
         | data op data op data op data {printf("row data is valid\n");}
         ;
 

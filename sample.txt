@@ -7,7 +7,7 @@ DIT              = "Howard Colin"
 format           = "16:9"
 camera           = "Arri Alexa"
 codec            = "ProRes"
-date             = "_auto"
+date             = "02/12/2020"
 
 reel: A001
   scene: 23/22a
