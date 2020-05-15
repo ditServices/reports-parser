@@ -8,7 +8,7 @@
 
 %%
 
-"production_title"  return PROD_TITL;
+"production_title"  {yylval = yytext; return PROD_TITL;}
 "director"          return _DIR;
 "DOP"               return DOP;
 "DIT"               return DIT;
@@ -28,15 +28,15 @@
                       exit(EXIT_SUCCESS);
                     }
 
-\"[^"\n]*["\n]              return META;
-[aA-aZ][0-9]+               return REEL_ID;
-([0-9aA-zZ]*\/[0-9aA-zZ]*)  return SCENE_ID;
-[0-9]+                      return SLATE_ID;
-[0-9][aA-zZ]+               return TAKE;
-[0-9]+-[0-9]+               return MULTI_T;
-[0-9]+MM                    return LENS;
-T[0-9]\.[0-9]+              return STOP;
-"{"([^}]*)"}"               return FILTERS;
+\"[^"\n]*["\n]              {yylval = yytext; return META;}
+[aA-aZ][0-9]+               {yylval = yytext; return REEL_ID;}
+([0-9aA-zZ]*\/[0-9aA-zZ]*)  {yylval = yytext; return SCENE_ID;}
+[0-9]+                      {yylval = yytext; return SLATE_ID;}
+[0-9][aA-zZ]+               {yylval = yytext; return TAKE;}
+[0-9]+-[0-9]+               {yylval = yytext; return MULTI_T;}
+[0-9]+MM                    {yylval = yytext; return LENS;}
+T[0-9]\.[0-9]+              {yylval = yytext; return STOP;}
+"{"([^}]*)"}"               {yylval = yytext; return FILTERS;}
 
 =                   return EQUALS;
 :                   return COLON;
