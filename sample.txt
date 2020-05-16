@@ -27,4 +27,12 @@ reel: A002
     slate: 005
       1, 100MM, T1.9, {ND.6}
 
+reel: A003
+  scene: 23/22a
+    slate: 004
+      1-5, 32MM, T1.9, {ND.3}
+    scene: 23/21
+  slate: 005
+     1, 100MM, T1.9, {ND.6}
+
 END

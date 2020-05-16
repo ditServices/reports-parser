@@ -1,16 +1,20 @@
 %{
 #include <stdio.h>
+#include <stdlib.h>
+#include "t_Count.h"
 int yylex();
 void yyerror(char *s);
 void check_command(int command_val, char *data);
+
 extern int yylineno;
 int v_val = 0;
+
 %}
 
 %define api.value.type {char *}
 
 %locations
-%token PROD_TITL _DIR DOP DIT FORMAT CAMERA CODEC DATE EQUALS SEP
+%token PROD_TITL _DIR DOP DIT FORMAT CAMERA CODEC DATE EQUALS SEP END
 %token COLON REEL REEL_ID META AUTO SCENE SCENE_ID SLATE SLATE_ID
 %token TAKE LENS STOP FILTERS MULTI_T
 
@@ -20,13 +24,17 @@ input: input metadata
      | metadata
      ;
 
-metadata: command op data {
-                              check_command(v_val, $3);
-                              free($3);
-                          }
-        | data op data op data op data {  printf("\t\t\t %s %s %s %s\n", $1, $3, $5, $7);
+metadata: command op data               {
+                                          check_command(v_val, $3);
+                                          free($3);
+                                        }
+
+        | data op data op data op data  { printf("\t\t\t %s %s %s %s\n", $1, $3, $5, $7);
                                           free($1); free($3); free($5); free($7);
                                         }
+
+        | END                           { printf("Total Reels: %d\n", t_ls.t_Reels);
+                                          exit(EXIT_SUCCESS);}
         ;
 
 command: PROD_TITL {v_val = PROD_TITL;}
@@ -37,7 +45,7 @@ command: PROD_TITL {v_val = PROD_TITL;}
       |  CAMERA    {v_val = CAMERA; }
       |  CODEC     {v_val = CODEC; }
       |  DATE      {v_val = DATE; }
-      |  REEL      {v_val = REEL;}
+      |  REEL      {v_val = REEL; t_ls.t_Reels++;}
       |  SCENE     {v_val = SCENE; }
       |  SLATE     {v_val = SLATE; }
       ;
@@ -61,6 +69,7 @@ data: META
 %%
 
 int main(void) {
+  t_ls.t_Reels = 0;
   return yyparse();
 }
 

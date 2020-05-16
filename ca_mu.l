@@ -23,10 +23,8 @@
 "slate"             return SLATE;
 
 "exit"              exit(EXIT_SUCCESS);
-"END"               {
-                      printf("EOF\n");
-                      exit(EXIT_SUCCESS);
-                    }
+"END"               return END;
+
 
 \"[^"\n]*["\n]              {yylval = strdup(yytext); return META;}
 [aA-aZ][0-9]+               {yylval = strdup(yytext); return REEL_ID;}
