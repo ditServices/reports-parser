@@ -19,8 +19,9 @@ input: input metadata
      | metadata
      ;
 
-metadata: command op data {printf("%d : %s is valid.\n", $$, $3);}
-        | data op data op data op data {printf("row data is valid\n\t %s\n", $1);}
+metadata: command op data {printf("%s is valid.\n", $3); free($3);}
+        | data op data op data op data {printf("row data is valid\n\t %s %s %s %s\n", $1, $3, $5, $7);
+                                         free($1); free($3); free($5); free($7);}
         ;
 
 command: PROD_TITL
