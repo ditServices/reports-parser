@@ -2,7 +2,7 @@
 #include <stdio.h>
 int yylex();
 void yyerror(char *s);
-void check_command(int command_val);
+void check_command(int command_val, char *data);
 extern int yylineno;
 int v_val = 0;
 %}
@@ -20,11 +20,11 @@ input: input metadata
      | metadata
      ;
 
-metadata: command op data {   printf("%s is valid.\n", v_val, $3);
-                              check_command(v_val);
+metadata: command op data {
+                              check_command(v_val, $3);
                               free($3);
                           }
-        | data op data op data op data {  printf("row data is valid\n\t %s %s %s %s\n", $1, $3, $5, $7);
+        | data op data op data op data {  printf("\t\t\t %s %s %s %s\n", $1, $3, $5, $7);
                                           free($1); free($3); free($5); free($7);
                                         }
         ;
@@ -64,10 +64,41 @@ int main(void) {
   return yyparse();
 }
 
-void check_command(int command_val) {
+void check_command(int command_val, char *data) {
   switch(command_val) {
     case PROD_TITL:
-      printf("TEST\n");
+      printf("Production Title: %s\n", data);
+      break;
+    case _DIR:
+      printf("Director: %s\n", data);
+      break;
+    case DOP:
+      printf("DOP: %s\n", data);
+      break;
+    case DIT:
+      printf("DIT: %s\n", data);
+      break;
+    case FORMAT:
+      printf("Format: %s\n", data);
+      break;
+    case CAMERA:
+      printf("Camera: %s\n", data);
+      break;
+    case CODEC:
+      printf("Codec: %s\n", data);
+      break;
+    case DATE:
+      printf("Date: %s\n", data);
+      break;
+    case REEL:
+      printf("\nReel: %s\n", data);
+      break;
+    case SCENE:
+      printf("\tScene: %s\n", data);
+      break;
+    case SLATE:
+      printf("\t\tSlate: %s\n", data);
+      break;
   }
 }
 
