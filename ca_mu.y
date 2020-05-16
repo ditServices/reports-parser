@@ -2,6 +2,7 @@
 #include <stdio.h>
 int yylex();
 void yyerror(char *s);
+void check_data(int data_val);
 extern int yylineno;
 %}
 
@@ -18,8 +19,8 @@ input: input metadata
      | metadata
      ;
 
-metadata: command op data {printf("%s is valid.\n", $3);}
-        | data op data op data op data {printf("row data is valid\n");}
+metadata: command op data {printf("%d : %s is valid.\n", $$, $3);}
+        | data op data op data op data {printf("row data is valid\n\t %s\n", $1);}
         ;
 
 command: PROD_TITL
@@ -40,21 +41,25 @@ op: EQUALS
   | SEP
   ;
 
-data: META            { printf("read: %s\n", $1); }
-    | REEL_ID         { printf("read: %s\n", $1); }
-    | SCENE_ID        { printf("read: %s\n", $1); }
-    | SLATE_ID        { printf("read: %s\n", $1); }
-    | TAKE            { printf("read: %s\n", $1); }
-    | MULTI_T         { printf("read: %s\n", $1); }
-    | LENS            { printf("read: %s\n", $1); }
-    | STOP            { printf("read: %s\n", $1); }
-    | FILTERS         { printf("read: %s\n", $1); }
+data: META
+    | REEL_ID
+    | SCENE_ID
+    | SLATE_ID
+    | TAKE
+    | MULTI_T
+    | LENS
+    | STOP
+    | FILTERS
     ;
 
 %%
 
 int main(void) {
   return yyparse();
+}
+
+void check_data(int data_val) {
+
 }
 
 void yyerror(char *s) {fprintf(stderr, "%s Line: %d\n", s, yylineno);}

@@ -8,7 +8,7 @@
 
 %%
 
-"production_title"  {yylval = yytext; return PROD_TITL;}
+"production_title"  return PROD_TITL;
 "director"          return _DIR;
 "DOP"               return DOP;
 "DIT"               return DIT;

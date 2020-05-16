@@ -1,9 +1,9 @@
 /* This is a comment */
 
 production_title = "My Production"
-director         = "Tom Smith"
-DOP              = "Tony Jones"
-DIT              = "Howard Colin"
+director         = "Dir Name"
+DOP              = "DOP Name"
+DIT              = "DIT Name"
 format           = "16:9"
 camera           = "Arri Alexa"
 codec            = "ProRes"
