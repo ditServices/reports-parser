@@ -1,4 +1,4 @@
-SRCS = ca_mu.tab.c lex.yy.c
+SRCS = ca_mu.tab.c lex.yy.c ca_reports.c
 
 all: $(SRCS)
 	cc $(SRCS) -o camu

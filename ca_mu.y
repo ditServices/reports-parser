@@ -2,12 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "t_Count.h"
+#include "ca_reports.h"
+
 int yylex();
 void yyerror(char *s);
 void check_command(int command_val, char *data);
 
 extern int yylineno;
 int v_val = 0;
+
+CA_REPORT *report;
 
 %}
 
@@ -33,7 +37,8 @@ metadata: command op data               {
                                           free($1); free($3); free($5); free($7);
                                         }
 
-        | END                           { printf("Total Reels: %d\n", t_ls.t_Reels);
+        | END                           { printf("Total reels: %d\n", t_ls.t_Reels);
+                                          printf("Total pages: %d\n", report->newpage);
                                           exit(EXIT_SUCCESS);}
         ;
 
@@ -70,7 +75,9 @@ data: META
 
 int main(void) {
   t_ls.t_Reels = 0;
+  report = new_report();
   return yyparse();
+  ca_free(report);
 }
 
 void check_command(int command_val, char *data) {
