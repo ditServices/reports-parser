@@ -39,7 +39,10 @@ metadata: command op data               {
 
         | END                           { printf("Total reels: %d\n", t_ls.t_Reels);
                                           printf("Total pages: %d\n", report->newpage);
-                                          exit(EXIT_SUCCESS);}
+                                          ca_save_report(report);
+                                          ca_free(report);
+                                          exit(EXIT_SUCCESS);
+                                        }
         ;
 
 command: PROD_TITL {v_val = PROD_TITL;}
@@ -77,13 +80,13 @@ int main(void) {
   t_ls.t_Reels = 0;
   report = new_report();
   return yyparse();
-  ca_free(report);
 }
 
 void check_command(int command_val, char *data) {
   switch(command_val) {
     case PROD_TITL:
       printf("Production Title: %s\n", data);
+      //ca_add_pt(report, data);
       break;
     case _DIR:
       printf("Director: %s\n", data);

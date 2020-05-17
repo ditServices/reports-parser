@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "ca_mu.tab.h"
+#include "ca_reports.h"
+extern void ca_free(CA_REPORT *report);
+extern CA_REPORT *report;
 %}
 
 %option yylineno
@@ -22,7 +25,7 @@
 "scene"             return SCENE;
 "slate"             return SLATE;
 
-"exit"              exit(EXIT_SUCCESS);
+"exit"              {ca_free(report); exit(EXIT_SUCCESS);}
 "END"               return END;
 
 
