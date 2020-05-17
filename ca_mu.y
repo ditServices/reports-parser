@@ -86,7 +86,7 @@ void check_command(int command_val, char *data) {
   switch(command_val) {
     case PROD_TITL:
       printf("Production Title: %s\n", data);
-      //ca_add_pt(report, data);
+      ca_add_pt(report, data);
       break;
     case _DIR:
       printf("Director: %s\n", data);

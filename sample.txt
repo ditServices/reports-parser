@@ -1,6 +1,6 @@
 /* This is a comment */
 
-production_title = "My Production"
+production_title = "My Great Show"
 director         = "Dir Name"
 DOP              = "DOP Name"
 DIT              = "DIT Name"
