@@ -39,9 +39,9 @@ CA_REPORT* new_report() {
   report->newpage = 1;
 
   HPDF_Page_SetSize(report->page_1, HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
+  ca_draw_meta_grid(report->pdf ,report->page_1);
   report->font = HPDF_GetFont(report->pdf, "Helvetica", NULL);
   HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
-
   return report;
 }
 

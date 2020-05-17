@@ -28,9 +28,9 @@ int ca_add_tablerow(char *reel, char *scene, char *slate, char *take,
 
 /* grid drawing methods for metadata table
  * and additional pages */
-int ca_draw_meta_grid();
+int ca_draw_meta_grid(HPDF_Doc pdf, HPDF_Page page);
 int ca_draw_table_grid();
-int ca_draw_con_grit();
+int ca_draw_con_grid();
 
 /* save report */
 int ca_save_report(CA_REPORT *report);

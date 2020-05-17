@@ -1,4 +1,4 @@
-SRCS = ca_mu.tab.c lex.yy.c ca_reports.c
+SRCS = ca_mu.tab.c lex.yy.c ca_reports.c grids.c
 
 all: $(SRCS)
 	cc $(SRCS) lib/libharu/cmake/src/libhpdfs.a -lm -lz -o build/camu
