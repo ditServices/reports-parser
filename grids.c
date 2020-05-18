@@ -3,7 +3,11 @@
 /* Margins */
 enum {
   GRID_LEFT_M = 5,
-  GRID_RIGHT_M = 5
+  GRID_RIGHT_M = 5,
+  GRID_TOP_M = 5,
+  GRID_BTM_M = 5,
+  MG_TITLE_TOP = 15,
+  MG_TITLE_BOTTOM = 50
 };
 
 /* Draw layout grid that contains production title metadata */
@@ -15,17 +19,23 @@ int ca_draw_meta_grid(HPDF_Doc pdf, HPDF_Page page) {
   HPDF_UINT x, y;
 
   HPDF_Page_SetFontAndSize(page, font, 5);
-  HPDF_Page_SetGrayFill(page, 0.5);
-  HPDF_Page_SetGrayStroke(page, 0.8);
-
-  y = height - 10;
   HPDF_Page_SetLineWidth(page, 0.8);
-  HPDF_Page_MoveTo(page, GRID_LEFT_M, y);
-  HPDF_Page_LineTo(page, width - GRID_RIGHT_M, y);
+
+  /* Title box */
+  y = height - MG_TITLE_TOP;
+  for(int x_lines = 0; x_lines < 2; x_lines++) {
+    HPDF_Page_MoveTo(page, GRID_LEFT_M, y);
+    HPDF_Page_LineTo(page, width - GRID_RIGHT_M, y);
+    HPDF_Page_Stroke(page);
+    y = height - MG_TITLE_BOTTOM;
+  }
+
+  x = width - GRID_LEFT_M;
+
+  HPDF_Page_MoveTo(page, x, height - MG_TITLE_TOP);
+  HPDF_Page_LineTo(page, x, height - MG_TITLE_BOTTOM);
   HPDF_Page_Stroke(page);
 
-  HPDF_Page_SetGrayFill(page, 0);
-  HPDF_Page_SetGrayStroke(page, 0);
   return 0;
 }
 
