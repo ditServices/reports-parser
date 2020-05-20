@@ -14,6 +14,13 @@
 #define HEADING_TWO 13
 #define DEFAULT_TEXT_SIZE 10
 
+#define TABLE_HEADER 200
+#define TABLE_START 230
+#define TB_TAKE 120
+#define TB_LENS 160
+#define TB_STOP 200
+#define TB_FILTERS 240
+
 /* HPDF Error methods */
 jmp_buf env;
 
@@ -56,6 +63,7 @@ CA_REPORT* new_report() {
   report->col1 = report->col1 - report->col1 + 50;
   report->col2 = report->width / 2;
   report->col2 + 100;
+  report->table_row = report->height - TABLE_START;
   return report;
 }
 
@@ -124,7 +132,6 @@ int ca_add_cam(CA_REPORT *report, char *cam) {
   HPDF_Page_BeginText(report->page_1);
   HPDF_Page_TextOut(report->page_1, report->col2, report->height - META_TOP, token);
   HPDF_Page_EndText(report->page_1);
-
   return 0;
 }
 
@@ -163,8 +170,29 @@ int ca_add_date(CA_REPORT *report, char *date) {
   HPDF_Page_BeginText(report->page_1);
   HPDF_Page_TextOut(report->page_1, report->col1, report->height - 40, date);
   HPDF_Page_EndText(report->page_1);
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
   return 0;
 }
+
+/* table row add func, not sure if this is correct as need to fig out a way
+ * to add reel and scene info too, also need to acoomodate for spanning multi pages */
+
+int ca_add_tablerow(CA_REPORT *report, char *take,
+                    char *lens, char *stop, char *filt ) {
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_TextOut(report->page_1, report->col1 + TB_TAKE, report->table_row, take);
+  HPDF_Page_TextOut(report->page_1, report->col1 + TB_LENS, report->table_row, lens);
+  HPDF_Page_TextOut(report->page_1, report->col1 + TB_STOP, report->table_row, stop);
+  HPDF_Page_TextOut(report->page_1, report->col1 + TB_FILTERS, report->table_row, filt);
+
+  HPDF_Page_EndText(report->page_1);
+
+  report->table_row = report->table_row - 20;
+  return 0;
+}
+
 
 
 /* Write report out to file */

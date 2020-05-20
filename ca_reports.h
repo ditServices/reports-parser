@@ -11,6 +11,7 @@ typedef struct CA_REPORT {
   HPDF_REAL width;
   HPDF_REAL height;
   HPDF_UINT col1, col2;
+  HPDF_UINT table_row;
 } CA_REPORT;
 
 CA_REPORT* new_report();
@@ -26,8 +27,8 @@ int ca_add_codec(CA_REPORT *report, char *codec);
 int ca_add_date(CA_REPORT *report, char *date);
 
 /* add table data */
-int ca_add_tablerow(char *reel, char *scene, char *slate, char *take,
-                    char *lens, char *stop, char *filt );
+int ca_add_tablerow(CA_REPORT *report, char *take,
+                    char *lens, char *stop, char *filt);
 
 /* grid drawing methods for metadata table
  * and additional pages */

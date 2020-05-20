@@ -34,6 +34,7 @@ metadata: command op data               {
                                         }
 
         | data op data op data op data  { printf("\t\t\t %s %s %s %s\n", $1, $3, $5, $7);
+                                          ca_add_tablerow(report, $1, $3, $5, $7);
                                           free($1); free($3); free($5); free($7);
                                         }
 

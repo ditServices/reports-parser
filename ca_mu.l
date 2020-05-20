@@ -38,7 +38,7 @@ char* duplicate_segment(const char* token, int token_length);
 [0-9]+-[0-9]+               {yylval = strdup(yytext); return MULTI_T;}
 [0-9]+MM                    {yylval = strdup(yytext); return LENS;}
 T[0-9]\.[0-9]+              {yylval = strdup(yytext); return STOP;}
-"{"([^}]*)"}"               {yylval = strdup(yytext); return FILTERS;}
+"{"([^}]*)"}"               {yylval = duplicate_segment(yytext+1, yyleng -2); return FILTERS;}
 
 =                   return EQUALS;
 :                   return COLON;
