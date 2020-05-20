@@ -5,8 +5,14 @@
 #include <stdio.h>
 #include <string.h>
 
-#define HEADING_ONE 18
-#define DEFAULT_TEXT_SIZE 12
+#define META_LEN 250
+#define META_TOP 90
+#define META_MIDDLE 120
+#define META_BOTTOM 150
+
+#define HEADING_ONE 20
+#define HEADING_TWO 13
+#define DEFAULT_TEXT_SIZE 10
 
 /* HPDF Error methods */
 jmp_buf env;
@@ -39,9 +45,17 @@ CA_REPORT* new_report() {
   report->newpage = 1;
 
   HPDF_Page_SetSize(report->page_1, HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
-  ca_draw_meta_grid(report->pdf ,report->page_1);
+
+  //ca_draw_meta_grid(report->pdf ,report->page_1);
   report->font = HPDF_GetFont(report->pdf, "Helvetica", NULL);
   HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+
+  report->width = HPDF_Page_GetWidth(report->page_1);
+  report->height = HPDF_Page_GetHeight(report->page_1);
+  report->col1 = report->width / 2;
+  report->col1 = report->col1 - report->col1 + 50;
+  report->col2 = report->width / 2;
+  report->col2 + 100;
   return report;
 }
 
@@ -53,13 +67,105 @@ int ca_add_pt(CA_REPORT *report, char *pt) {
   float tw = HPDF_Page_TextWidth(report->page_1, token);
 
   HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, (HPDF_Page_GetWidth(report->page_1) - tw) / 2, HPDF_Page_GetHeight(report->page_1) - 40, token);
+  HPDF_Page_TextOut(report->page_1, (report->width - tw) / 2, report->height - 40, token);
   HPDF_Page_EndText(report->page_1);
 
   /* Return page size to default */
   HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
   return 0;
 }
+
+/* Add director to report */
+int ca_add_dir(CA_REPORT *report, char *_dir) {
+  char token[META_LEN] = "Director: ";
+  strcat(token, _dir);
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_TextOut(report->page_1, report->col1, report->height - META_TOP, token);
+  HPDF_Page_EndText(report->page_1);
+  return 0;
+}
+
+/* Add DOP to report */
+int ca_add_dop(CA_REPORT *report, char *dop) {
+  char token[META_LEN] = "DOP: ";
+  strcat(token, dop);
+
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+
+
+  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_TextOut(report->page_1, report->col1, report->height - META_MIDDLE, token);
+  HPDF_Page_EndText(report->page_1);
+  return 0;
+}
+
+/* Add DIT to report */
+int ca_add_dit(CA_REPORT *report, char *dit) {
+  char token[META_LEN] = "DIT: ";
+  strcat(token, dit);
+
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_TextOut(report->page_1, report->col1, report->height - META_BOTTOM, token);
+  HPDF_Page_EndText(report->page_1);
+  return 0;
+}
+
+/* Add camera to report */
+int ca_add_cam(CA_REPORT *report, char *cam) {
+  char token[META_LEN] = "Camera: ";
+  strcat(token, cam);
+
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_TextOut(report->page_1, report->col2, report->height - META_TOP, token);
+  HPDF_Page_EndText(report->page_1);
+
+  return 0;
+}
+
+/* Add camera format to report */
+int ca_add_frmt(CA_REPORT *report, char *frmt) {
+  char token[META_LEN] = "Format: ";
+  strcat(token, frmt);
+
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_TextOut(report->page_1, report->col2, report->height - META_MIDDLE, token);
+  HPDF_Page_EndText(report->page_1);
+
+  return 0;
+}
+
+/* Add codec to report */
+int ca_add_codec(CA_REPORT *report, char *codec) {
+
+  char token[META_LEN] = "Codec: ";
+  strcat(token, codec);
+
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_TextOut(report->page_1, report->col2, report->height - META_BOTTOM, token);
+  HPDF_Page_EndText(report->page_1);
+
+  return 0;
+}
+
+/* Add date to report */
+int ca_add_date(CA_REPORT *report, char *date) {
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, HEADING_TWO);
+  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_TextOut(report->page_1, report->col1, report->height - 40, date);
+  HPDF_Page_EndText(report->page_1);
+  return 0;
+}
+
 
 /* Write report out to file */
 int ca_save_report(CA_REPORT *report) {

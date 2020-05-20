@@ -5,6 +5,7 @@
 #include "ca_reports.h"
 extern void ca_free(CA_REPORT *report);
 extern CA_REPORT *report;
+char* duplicate_segment(const char* token, int token_length);
 %}
 
 %option yylineno
@@ -29,7 +30,7 @@ extern CA_REPORT *report;
 "END"               return END;
 
 
-\"[^"\n]*["\n]              {yylval = strdup(yytext); return META;}
+\"[^"\n]*["\n]              {yylval = duplicate_segment(yytext+1, yyleng -2); return META;}
 [aA-aZ][0-9]+               {yylval = strdup(yytext); return REEL_ID;}
 ([0-9aA-zZ]*\/[0-9aA-zZ]*)  {yylval = strdup(yytext); return SCENE_ID;}
 [0-9]+                      {yylval = strdup(yytext); return SLATE_ID;}
@@ -52,4 +53,12 @@ T[0-9]\.[0-9]+              {yylval = strdup(yytext); return STOP;}
 
 int yywrap(void) {
   return 1;
+}
+
+char* duplicate_segment(const char* token, int token_length) {
+  char* dup = malloc(token_length + 1);
+  if (!dup) { /* handle memory allocation error */ }
+  memcpy(dup, token, token_length);
+  dup[token_length] = 0;
+  return dup;
 }

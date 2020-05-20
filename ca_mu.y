@@ -90,24 +90,31 @@ void check_command(int command_val, char *data) {
       break;
     case _DIR:
       printf("Director: %s\n", data);
+      ca_add_dir(report, data);
       break;
     case DOP:
       printf("DOP: %s\n", data);
+      ca_add_dop(report, data);
       break;
     case DIT:
       printf("DIT: %s\n", data);
+      ca_add_dit(report, data);
       break;
     case FORMAT:
       printf("Format: %s\n", data);
+      ca_add_frmt(report, data);
       break;
     case CAMERA:
       printf("Camera: %s\n", data);
+      ca_add_cam(report, data);
       break;
     case CODEC:
       printf("Codec: %s\n", data);
+      ca_add_codec(report, data);
       break;
     case DATE:
       printf("Date: %s\n", data);
+      ca_add_date(report, data);
       break;
     case REEL:
       printf("\nReel: %s\n", data);

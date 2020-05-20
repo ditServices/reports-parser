@@ -8,19 +8,22 @@ typedef struct CA_REPORT {
   HPDF_Doc pdf;
   HPDF_Font font;
   HPDF_Page page_1;
+  HPDF_REAL width;
+  HPDF_REAL height;
+  HPDF_UINT col1, col2;
 } CA_REPORT;
 
 CA_REPORT* new_report();
 
 /* Add metadata to report header */
 int ca_add_pt(CA_REPORT *report, char *pt);
-int ca_add_dir(char *_dir);
-int ca_add_dop(char *dop);
-int ca_add_dit(char *dit);
-int ca_add_frmt(char *frmt);
-int ca_add_cam(char *cam);
-int ca_add_codec(char *codec);
-int ca_add_data(char *date);
+int ca_add_dir(CA_REPORT *report, char *_dir);
+int ca_add_dop(CA_REPORT *report, char *dop);
+int ca_add_dit(CA_REPORT *report, char *dit);
+int ca_add_frmt(CA_REPORT *report, char *frmt);
+int ca_add_cam(CA_REPORT *report, char *cam);
+int ca_add_codec(CA_REPORT *report, char *codec);
+int ca_add_date(CA_REPORT *report, char *date);
 
 /* add table data */
 int ca_add_tablerow(char *reel, char *scene, char *slate, char *take,
