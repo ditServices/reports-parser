@@ -16,10 +16,13 @@
 
 #define TABLE_HEADER 200
 #define TABLE_START 230
-#define TB_TAKE 120
-#define TB_LENS 160
-#define TB_STOP 200
-#define TB_FILTERS 240
+#define TB_REEL 20
+#define TB_SCENE 50
+#define TB_SLATE 95
+#define TB_TAKE 130
+#define TB_LENS 170
+#define TB_STOP 210
+#define TB_FILTERS 250
 
 /* HPDF Error methods */
 jmp_buf env;
@@ -66,7 +69,6 @@ CA_REPORT* new_report() {
   report->table_row = report->height - TABLE_START;
   return report;
 }
-
 
 /* Add production title to report header */
 int ca_add_pt(CA_REPORT *report, char *pt) {
@@ -193,7 +195,35 @@ int ca_add_tablerow(CA_REPORT *report, char *take,
   return 0;
 }
 
+int ca_add_reel(CA_REPORT *report, char *reel) {
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->page_1);
 
+  HPDF_Page_TextOut(report->page_1, report->col1 + TB_REEL, report->table_row, reel);
+
+  HPDF_Page_EndText(report->page_1);
+  return 0;
+}
+
+int ca_add_scene(CA_REPORT *report, char *scene) {
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->page_1);
+
+  HPDF_Page_TextOut(report->page_1, report->col1 + TB_SCENE, report->table_row, scene);
+
+  HPDF_Page_EndText(report->page_1);
+  return 0;
+}
+
+int ca_add_slate(CA_REPORT *report, char *slate) {
+  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->page_1);
+
+  HPDF_Page_TextOut(report->page_1, report->col1 + TB_SLATE, report->table_row, slate);
+
+  HPDF_Page_EndText(report->page_1);
+  return 0;
+}
 
 /* Write report out to file */
 int ca_save_report(CA_REPORT *report) {

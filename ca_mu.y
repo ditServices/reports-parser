@@ -119,12 +119,15 @@ void check_command(int command_val, char *data) {
       break;
     case REEL:
       printf("\nReel: %s\n", data);
+      ca_add_reel(report, data);
       break;
     case SCENE:
       printf("\tScene: %s\n", data);
+      ca_add_scene(report, data);
       break;
     case SLATE:
       printf("\t\tSlate: %s\n", data);
+      ca_add_slate(report, data);
       break;
   }
 }

@@ -26,6 +26,9 @@ int ca_add_cam(CA_REPORT *report, char *cam);
 int ca_add_codec(CA_REPORT *report, char *codec);
 int ca_add_date(CA_REPORT *report, char *date);
 
+int ca_add_reel(CA_REPORT *report, char *reel);
+int ca_add_scene(CA_REPORT *report, char *scene);
+int ca_add_slate(CA_REPORT *report, char *slate);
 /* add table data */
 int ca_add_tablerow(CA_REPORT *report, char *take,
                     char *lens, char *stop, char *filt);
