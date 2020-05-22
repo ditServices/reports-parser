@@ -16,13 +16,13 @@
 
 #define TABLE_HEADER 200
 #define TABLE_START 230
-#define TB_REEL 20
-#define TB_SCENE 50
-#define TB_SLATE 95
-#define TB_TAKE 130
-#define TB_LENS 170
-#define TB_STOP 210
-#define TB_FILTERS 250
+#define TB_REEL 5
+#define TB_SCENE 40
+#define TB_SLATE 85
+#define TB_TAKE 125
+#define TB_LENS 165
+#define TB_STOP 205
+#define TB_FILTERS 245
 
 /* HPDF Error methods */
 jmp_buf env;
@@ -40,8 +40,23 @@ error_handler (HPDF_STATUS error_no, HPDF_STATUS detail_no, void *user_data)
     longjmp(env, 1);
 }
 
-/* init report with defualt values and grid.
- *  TODO: grid_methods */
+/* Draw table header */
+ int ca_draw_header(CA_REPORT *report) {
+   HPDF_Page_BeginText(report->page_1);
+   HPDF_Page_TextOut(report->page_1, report->col1 + TB_REEL, report->height - TABLE_HEADER, "REEL");
+   HPDF_Page_TextOut(report->page_1, report->col1 + TB_SCENE, report->height - TABLE_HEADER, "SCENE");
+   HPDF_Page_TextOut(report->page_1, report->col1 + TB_SLATE, report->height - TABLE_HEADER, "SLATE");
+   HPDF_Page_TextOut(report->page_1, report->col1 + TB_TAKE, report->height - TABLE_HEADER, "TAKE");
+   HPDF_Page_TextOut(report->page_1, report->col1 + TB_LENS, report->height - TABLE_HEADER, "LENS");
+   HPDF_Page_TextOut(report->page_1, report->col1 + TB_STOP, report->height - TABLE_HEADER, "STOP");
+   HPDF_Page_TextOut(report->page_1, report->col1 + TB_FILTERS, report->height - TABLE_HEADER, "NOTES");
+
+   HPDF_Page_EndText(report->page_1);
+   return 0;
+ }
+
+ /* init report with defualt values and grid.
+  *  TODO: grid_methods */
 CA_REPORT* new_report() {
   CA_REPORT *report = malloc(sizeof(CA_REPORT));
   report->pdf = HPDF_New(error_handler, NULL);
@@ -55,8 +70,6 @@ CA_REPORT* new_report() {
   report->newpage = 1;
 
   HPDF_Page_SetSize(report->page_1, HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
-
-  //ca_draw_meta_grid(report->pdf ,report->page_1);
   report->font = HPDF_GetFont(report->pdf, "Helvetica", NULL);
   HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
 
@@ -67,6 +80,7 @@ CA_REPORT* new_report() {
   report->col2 = report->width / 2;
   report->col2 + 100;
   report->table_row = report->height - TABLE_START;
+  ca_draw_header(report);
   return report;
 }
 
@@ -176,9 +190,7 @@ int ca_add_date(CA_REPORT *report, char *date) {
   return 0;
 }
 
-/* table row add func, not sure if this is correct as need to fig out a way
- * to add reel and scene info too, also need to acoomodate for spanning multi pages */
-
+/* Table row add function - Need to accomodate for spanning several pages */
 int ca_add_tablerow(CA_REPORT *report, char *take,
                     char *lens, char *stop, char *filt ) {
   HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
@@ -195,6 +207,8 @@ int ca_add_tablerow(CA_REPORT *report, char *take,
   return 0;
 }
 
+/* Add reel data to page
+ * These functions need to check the page that they are writing to */
 int ca_add_reel(CA_REPORT *report, char *reel) {
   HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
   HPDF_Page_BeginText(report->page_1);
@@ -205,6 +219,7 @@ int ca_add_reel(CA_REPORT *report, char *reel) {
   return 0;
 }
 
+/* Add scene data to page */
 int ca_add_scene(CA_REPORT *report, char *scene) {
   HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
   HPDF_Page_BeginText(report->page_1);
@@ -215,6 +230,8 @@ int ca_add_scene(CA_REPORT *report, char *scene) {
   return 0;
 }
 
+
+/* Add slate data to page */
 int ca_add_slate(CA_REPORT *report, char *slate) {
   HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
   HPDF_Page_BeginText(report->page_1);
