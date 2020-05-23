@@ -42,16 +42,16 @@ error_handler (HPDF_STATUS error_no, HPDF_STATUS detail_no, void *user_data)
 
 /* Draw table header */
  int ca_draw_header(CA_REPORT *report) {
-   HPDF_Page_BeginText(report->page_1);
-   HPDF_Page_TextOut(report->page_1, report->col1 + TB_REEL, report->height - TABLE_HEADER, "REEL");
-   HPDF_Page_TextOut(report->page_1, report->col1 + TB_SCENE, report->height - TABLE_HEADER, "SCENE");
-   HPDF_Page_TextOut(report->page_1, report->col1 + TB_SLATE, report->height - TABLE_HEADER, "SLATE");
-   HPDF_Page_TextOut(report->page_1, report->col1 + TB_TAKE, report->height - TABLE_HEADER, "TAKE");
-   HPDF_Page_TextOut(report->page_1, report->col1 + TB_LENS, report->height - TABLE_HEADER, "LENS");
-   HPDF_Page_TextOut(report->page_1, report->col1 + TB_STOP, report->height - TABLE_HEADER, "STOP");
-   HPDF_Page_TextOut(report->page_1, report->col1 + TB_FILTERS, report->height - TABLE_HEADER, "NOTES");
+   HPDF_Page_BeginText(report->pages[0]);
+   HPDF_Page_TextOut(report->pages[0], report->col1 + TB_REEL, report->height - TABLE_HEADER, "REEL");
+   HPDF_Page_TextOut(report->pages[0], report->col1 + TB_SCENE, report->height - TABLE_HEADER, "SCENE");
+   HPDF_Page_TextOut(report->pages[0], report->col1 + TB_SLATE, report->height - TABLE_HEADER, "SLATE");
+   HPDF_Page_TextOut(report->pages[0], report->col1 + TB_TAKE, report->height - TABLE_HEADER, "TAKE");
+   HPDF_Page_TextOut(report->pages[0], report->col1 + TB_LENS, report->height - TABLE_HEADER, "LENS");
+   HPDF_Page_TextOut(report->pages[0], report->col1 + TB_STOP, report->height - TABLE_HEADER, "STOP");
+   HPDF_Page_TextOut(report->pages[0], report->col1 + TB_FILTERS, report->height - TABLE_HEADER, "NOTES");
 
-   HPDF_Page_EndText(report->page_1);
+   HPDF_Page_EndText(report->pages[0]);
    return 0;
  }
 
@@ -65,16 +65,16 @@ CA_REPORT* new_report() {
     HPDF_Free(report->pdf);
     return NULL;
   }
-
-  report->page_1 = HPDF_AddPage(report->pdf);
   report->newpage = 1;
+  report->pages = malloc(sizeof(HPDF_Page) * report->newpage);
+  report->pages[0] = HPDF_AddPage(report->pdf);
 
-  HPDF_Page_SetSize(report->page_1, HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
+  HPDF_Page_SetSize(report->pages[0], HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
   report->font = HPDF_GetFont(report->pdf, "Helvetica", NULL);
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
-  report->width = HPDF_Page_GetWidth(report->page_1);
-  report->height = HPDF_Page_GetHeight(report->page_1);
+  report->width = HPDF_Page_GetWidth(report->pages[0]);
+  report->height = HPDF_Page_GetHeight(report->pages[0]);
   report->col1 = report->width / 2;
   report->col1 = report->col1 - report->col1 + 50;
   report->col2 = report->width / 2;
@@ -87,15 +87,15 @@ CA_REPORT* new_report() {
 /* Add production title to report header */
 int ca_add_pt(CA_REPORT *report, char *pt) {
   char *token = pt;
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, HEADING_ONE);
-  float tw = HPDF_Page_TextWidth(report->page_1, token);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, HEADING_ONE);
+  float tw = HPDF_Page_TextWidth(report->pages[0], token);
 
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, (report->width - tw) / 2, report->height - 40, token);
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], (report->width - tw) / 2, report->height - 40, token);
+  HPDF_Page_EndText(report->pages[0]);
 
   /* Return page size to default */
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
   return 0;
 }
 
@@ -103,11 +103,11 @@ int ca_add_pt(CA_REPORT *report, char *pt) {
 int ca_add_dir(CA_REPORT *report, char *_dir) {
   char token[META_LEN] = "Director: ";
   strcat(token, _dir);
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, report->col1, report->height - META_TOP, token);
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_TOP, token);
+  HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
@@ -116,12 +116,12 @@ int ca_add_dop(CA_REPORT *report, char *dop) {
   char token[META_LEN] = "DOP: ";
   strcat(token, dop);
 
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
 
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, report->col1, report->height - META_MIDDLE, token);
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_MIDDLE, token);
+  HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
@@ -130,11 +130,11 @@ int ca_add_dit(CA_REPORT *report, char *dit) {
   char token[META_LEN] = "DIT: ";
   strcat(token, dit);
 
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, report->col1, report->height - META_BOTTOM, token);
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_BOTTOM, token);
+  HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
@@ -143,11 +143,11 @@ int ca_add_cam(CA_REPORT *report, char *cam) {
   char token[META_LEN] = "Camera: ";
   strcat(token, cam);
 
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, report->col2, report->height - META_TOP, token);
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_TOP, token);
+  HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
@@ -156,11 +156,11 @@ int ca_add_frmt(CA_REPORT *report, char *frmt) {
   char token[META_LEN] = "Format: ";
   strcat(token, frmt);
 
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, report->col2, report->height - META_MIDDLE, token);
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_MIDDLE, token);
+  HPDF_Page_EndText(report->pages[0]);
 
   return 0;
 }
@@ -171,37 +171,39 @@ int ca_add_codec(CA_REPORT *report, char *codec) {
   char token[META_LEN] = "Codec: ";
   strcat(token, codec);
 
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, report->col2, report->height - META_BOTTOM, token);
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_BOTTOM, token);
+  HPDF_Page_EndText(report->pages[0]);
 
   return 0;
 }
 
 /* Add date to report */
 int ca_add_date(CA_REPORT *report, char *date) {
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, HEADING_TWO);
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, report->col1, report->height - 40, date);
-  HPDF_Page_EndText(report->page_1);
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, HEADING_TWO);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - 40, date);
+  HPDF_Page_EndText(report->pages[0]);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
   return 0;
 }
 
 /* Table row add function - Need to accomodate for spanning several pages */
 int ca_add_tablerow(CA_REPORT *report, char *take,
                     char *lens, char *stop, char *filt ) {
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
+  int page = report->newpage;
+  page = page - 1;
+  HPDF_Page_SetFontAndSize(report->pages[page], report->font, DEFAULT_TEXT_SIZE);
 
-  HPDF_Page_BeginText(report->page_1);
-  HPDF_Page_TextOut(report->page_1, report->col1 + TB_TAKE, report->table_row, take);
-  HPDF_Page_TextOut(report->page_1, report->col1 + TB_LENS, report->table_row, lens);
-  HPDF_Page_TextOut(report->page_1, report->col1 + TB_STOP, report->table_row, stop);
-  HPDF_Page_TextOut(report->page_1, report->col1 + TB_FILTERS, report->table_row, filt);
+  HPDF_Page_BeginText(report->pages[page]);
+  HPDF_Page_TextOut(report->pages[page], report->col1 + TB_TAKE, report->table_row, take);
+  HPDF_Page_TextOut(report->pages[page], report->col1 + TB_LENS, report->table_row, lens);
+  HPDF_Page_TextOut(report->pages[page], report->col1 + TB_STOP, report->table_row, stop);
+  HPDF_Page_TextOut(report->pages[page], report->col1 + TB_FILTERS, report->table_row, filt);
 
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_EndText(report->pages[page]);
 
   report->table_row = report->table_row - 20;
   return 0;
@@ -210,35 +212,35 @@ int ca_add_tablerow(CA_REPORT *report, char *take,
 /* Add reel data to page
  * These functions need to check the page that they are writing to */
 int ca_add_reel(CA_REPORT *report, char *reel) {
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
-  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->pages[0]);
 
-  HPDF_Page_TextOut(report->page_1, report->col1 + TB_REEL, report->table_row, reel);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + TB_REEL, report->table_row, reel);
 
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
 /* Add scene data to page */
 int ca_add_scene(CA_REPORT *report, char *scene) {
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
-  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->pages[0]);
 
-  HPDF_Page_TextOut(report->page_1, report->col1 + TB_SCENE, report->table_row, scene);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + TB_SCENE, report->table_row, scene);
 
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
 
 /* Add slate data to page */
 int ca_add_slate(CA_REPORT *report, char *slate) {
-  HPDF_Page_SetFontAndSize(report->page_1, report->font, DEFAULT_TEXT_SIZE);
-  HPDF_Page_BeginText(report->page_1);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->pages[0]);
 
-  HPDF_Page_TextOut(report->page_1, report->col1 + TB_SLATE, report->table_row, slate);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + TB_SLATE, report->table_row, slate);
 
-  HPDF_Page_EndText(report->page_1);
+  HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
@@ -253,5 +255,6 @@ int ca_save_report(CA_REPORT *report) {
 /* Ensure that memory is freed */
 void ca_free(CA_REPORT *report) {
     printf("Freeing memory\n");
+    free(report->pages[0]);
     free(report);
 }

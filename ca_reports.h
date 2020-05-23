@@ -7,7 +7,7 @@ typedef struct CA_REPORT {
   int newpage;
   HPDF_Doc pdf;
   HPDF_Font font;
-  HPDF_Page page_1;
+  HPDF_Page *pages;
   HPDF_REAL width;
   HPDF_REAL height;
   HPDF_UINT col1, col2;
