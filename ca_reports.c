@@ -10,6 +10,10 @@
 #define META_MIDDLE 120
 #define META_BOTTOM 150
 
+#define INDEX_YPOS 40
+#define INDEX_XPOS 200
+
+#define INDEX_SIZE  40
 #define HEADING_ONE 20
 #define HEADING_TWO 13
 #define DEFAULT_TEXT_SIZE 10
@@ -57,6 +61,16 @@ error_handler (HPDF_STATUS error_no, HPDF_STATUS detail_no, void *user_data)
    HPDF_Page_EndText(report->pages[page]);
    return 0;
  }
+
+int ca_add_cindex(CA_REPORT *report, char* cam_index) {
+  int page = report->newpage - 1;
+  HPDF_Page_SetFontAndSize(report->pages[page], report->font, INDEX_SIZE);
+  HPDF_Page_BeginText(report->pages[page]);
+  HPDF_Page_TextOut(report->pages[page], report->col2 + INDEX_XPOS, report->height - INDEX_YPOS, cam_index);
+  HPDF_Page_EndText(report->pages[page]);
+  HPDF_Page_SetFontAndSize(report->pages[page], report->font, DEFAULT_TEXT_SIZE);
+  return 0;
+}
 
  /* init report with defualt values and grid.
   *  TODO: grid_methods */

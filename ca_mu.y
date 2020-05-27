@@ -19,7 +19,7 @@ CA_REPORT *report;
 %define api.value.type {char *}
 
 %locations
-%token PROD_TITL _DIR DOP DIT FORMAT CAMERA CODEC DATE EQUALS SEP END
+%token PROD_TITL _DIR DOP DIT CAM_INDEX CAM_ASSIST FORMAT CAMERA CODEC DATE EQUALS SEP END
 %token COLON REEL REEL_ID META AUTO SCENE SCENE_ID SLATE SLATE_ID
 %token TAKE LENS STOP FILTERS MULTI_T
 
@@ -58,6 +58,8 @@ command: PROD_TITL {v_val = PROD_TITL;}
       |  REEL      {v_val = REEL; t_ls.t_Reels++;}
       |  SCENE     {v_val = SCENE; }
       |  SLATE     {v_val = SLATE; }
+      |  CAM_INDEX {v_val = CAM_INDEX; }
+      |  CAM_ASSIST {v_val = CAM_ASSIST; }
       ;
 
 op: EQUALS
@@ -130,6 +132,12 @@ void check_command(int command_val, char *data) {
     case SLATE:
       printf("\t\tSlate: %s\n", data);
       ca_add_slate(report, data);
+      break;
+    case CAM_INDEX:
+      printf("Camera Index: %s\n", data);
+      ca_add_cindex(report, data);
+      break;
+    case CAM_ASSIST:
       break;
   }
 }

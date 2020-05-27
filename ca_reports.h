@@ -26,6 +26,8 @@ int ca_add_frmt(CA_REPORT *report, char *frmt);
 int ca_add_cam(CA_REPORT *report, char *cam);
 int ca_add_codec(CA_REPORT *report, char *codec);
 int ca_add_date(CA_REPORT *report, char *date);
+int ca_add_assistant(CA_REPORT *report, char *cam_assistant);
+int ca_add_cindex(CA_REPORT *report, char *index);
 
 int ca_add_reel(CA_REPORT *report, char *reel);
 int ca_add_scene(CA_REPORT *report, char *scene);

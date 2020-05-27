@@ -21,6 +21,8 @@ char* duplicate_segment(const char* token, int token_length);
 "codec"             return CODEC;
 "date"              return DATE;
 "_auto"             return AUTO;
+"cam_assistant"     return CAM_ASSIST;
+"cam_index"         return CAM_INDEX;
 
 "reel"              return REEL;
 "scene"             return SCENE;
