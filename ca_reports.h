@@ -5,6 +5,7 @@
 
 typedef struct CA_REPORT {
   int newpage;
+  char *report_date;
   HPDF_Doc pdf;
   HPDF_Font font;
   HPDF_Page *pages;

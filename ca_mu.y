@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "t_Count.h"
 #include "ca_reports.h"
@@ -116,6 +117,7 @@ void check_command(int command_val, char *data) {
     case DATE:
       printf("Date: %s\n", data);
       ca_add_date(report, data);
+      report->report_date = strdup(data);
       break;
     case REEL:
       printf("\nReel: %s\n", data);

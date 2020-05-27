@@ -185,11 +185,12 @@ int ca_add_codec(CA_REPORT *report, char *codec) {
 
 /* Add date to report */
 int ca_add_date(CA_REPORT *report, char *date) {
-  HPDF_Page_SetFontAndSize(report->pages[0], report->font, HEADING_TWO);
-  HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - 40, date);
-  HPDF_Page_EndText(report->pages[0]);
-  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+  int page = report->newpage - 1;
+  HPDF_Page_SetFontAndSize(report->pages[page], report->font, HEADING_TWO);
+  HPDF_Page_BeginText(report->pages[page]);
+  HPDF_Page_TextOut(report->pages[page], report->col1, report->height - 40, date);
+  HPDF_Page_EndText(report->pages[page]);
+  HPDF_Page_SetFontAndSize(report->pages[page], report->font, DEFAULT_TEXT_SIZE);
   return 0;
 }
 
@@ -202,6 +203,7 @@ int ca_add_page(CA_REPORT *report) {
     HPDF_Page_SetSize(report->pages[report->newpage-1], HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
     HPDF_Page_SetFontAndSize(report->pages[report->newpage-1], report->font, DEFAULT_TEXT_SIZE);
     ca_draw_header(report, CTABLE_HEADER);
+    ca_add_date(report, report->report_date);
   }
   return 0;
 }
@@ -283,9 +285,16 @@ int ca_save_report(CA_REPORT *report) {
 /* Ensure that memory is freed needs to iterate over each dynamically allocated page */
 void ca_free(CA_REPORT *report) {
     printf("Freeing memory\n");
+
     for(int i=0; i < report->newpage; i++) {
         free(report->pages[i]);
     }
+
     free(report->pages);
+
+    if(report->report_date) {
+      free(report->report_date);
+    }
+
     free(report);
 }
