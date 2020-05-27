@@ -1,38 +1,52 @@
 /* This is a comment */
 
-production_title = "My Great Show"
-director         = "Dir Name"
-DOP              = "DOP Name"
-DIT              = "DIT Name"
+production_title = "War of The Worlds S1"
+director         = "Craig Viveiros"
+DOP              = "Milos Moore"
+DIT              = "Alex Beards"
 format           = "16:9"
 camera           = "Arri Alexa"
-codec            = "ProRes"
-date             = "02/12/2020"
+codec            = "ProRes 4444"
+date             = "18/07/2020"
+
+cam_index        = "A"
+cam_assistant    = "Peter Lowden"
 
 reel: A001
-  scene: 23/22a
-    slate: 001
-      1, 50MM, T1.8, { ND.3 }
-      3AFS,   50MM, T1.8, {ND.3}
-    slate: 002
-      1,  65MM, T1.8, {ND.3 BPM1/2}
-    slate: 003
-      1-3, 24MM, T1.9, {ND.3}
+ scene: 2/22a
+   slate: 001
+     1-5, 32MM, T1.9, {5600K ND.3 800EI}
+     6, 50MM, T1.9, {5600K ND.3}
+   slate: 002
+     1, 50MM, T2.8, {4000K, ND.3 BPM 1/8}
+   slate: 003
+     1, 50MM, T2.8, {4000K, ND.3 BPM 1/4}   /* Comments can be used to communicate between Assistant and DIT */
+   slate: 004
+     1-2, 100MM, T1.9, {ND.6, BPM 1/8}
+     3, 100MM, T2.8, {ND.3, BPM 1/8}
+   slate: 005
+     1, 24MM, T4, {5600K ND.3}
+     1AFS, 24MM, T4, {5600K, ND.3}
+     2-3, 24MM, T4, {""}
+ scene: 1/1
+  slate: 006
+     1-3, 50MM, T1.9, {3200K BPM 1/8 *DAY FOR NIGHT*}
 
 reel: A002
-  scene: 23/22a
-    slate: 004
-      1-5, 32MM, T1.9, {ND.3}
-  scene: 23/21
-    slate: 005
-      1, 100MM, T1.9, {ND.6}
-
-reel: A003
-  scene: 23/22a
-    slate: 004
-      1-5, 32MM, T1.9, {ND.3}
-    scene: 23/21
-  slate: 005
-     1, 100MM, T1.9, {ND.6}
+    slate: 007
+      1-2, 24MM, T1.9, {3200K, BPM 1/8}
+    slate: 008
+      1-5, 32MM, T2.8, {3200K, BPM 1/8 1600EI}
+  scene: 1/33
+    slate: 009
+      1-2, 85MM, T2.9, {4000K BPM1/8 ALURA ZOOM 45-250 800EI}
+    slate: 010
+      1-3, 180MM, T1.9, {4000K}
+    slate: 011
+      1-2, 65MM, T1.9, {5600K ND.6 GG1/8}
+      3, 50MM, T1.9, {"" "" "" *END BOARD*}
+  scene: 1/3
+    slate: 012
+      1-2, 135MM, T4, {5600K ND.6}
 
 END
