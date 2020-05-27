@@ -29,6 +29,8 @@
 #define TB_STOP 205
 #define TB_FILTERS 245
 
+#define P_NUM_YPOS 800
+
 /* HPDF Error methods */
 jmp_buf env;
 
@@ -72,6 +74,17 @@ int ca_add_cindex(CA_REPORT *report, char* cam_index) {
   return 0;
 }
 
+int ca_add_pnum(CA_REPORT *report) {
+  int page = report->newpage - 1;
+  char page_num[3];
+  sprintf(page_num, "%d", report->newpage);
+  HPDF_Page_SetFontAndSize(report->pages[page], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->pages[page]);
+  HPDF_Page_TextOut(report->pages[page], report->col1, report->height - P_NUM_YPOS, page_num);
+  HPDF_Page_EndText(report->pages[page]);
+  return 0;
+}
+
  /* init report with defualt values and grid.
   *  TODO: grid_methods */
 CA_REPORT* new_report() {
@@ -98,6 +111,7 @@ CA_REPORT* new_report() {
   report->col2 + 100;
   report->table_row = report->height - TABLE_START;
   ca_draw_header(report, TABLE_HEADER);
+  ca_add_pnum(report);
   return report;
 }
 
@@ -219,6 +233,7 @@ int ca_add_page(CA_REPORT *report) {
     ca_draw_header(report, CTABLE_HEADER);
     ca_add_date(report, report->report_date);
     ca_add_cindex(report, report->camera_index);
+    ca_add_pnum(report);
   }
   return 0;
 }
