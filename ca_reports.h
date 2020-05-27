@@ -6,6 +6,7 @@
 typedef struct CA_REPORT {
   /*page count*/
   int newpage;
+  int total_reels;
   /* Save data we need for other pages */
   char *report_date;
   char *camera_index;
@@ -41,7 +42,8 @@ int ca_add_slate(CA_REPORT *report, char *slate);
 /* add table data */
 int ca_add_tablerow(CA_REPORT *report, char *take,
                     char *lens, char *stop, char *filt);
-
+int ca_total_reels(CA_REPORT *report);
+int ca_add_assistant(CA_REPORT *report, char *data);
 /* grid drawing methods for metadata table
  * and additional pages */
 int ca_draw_meta_grid(HPDF_Doc pdf, HPDF_Page page);

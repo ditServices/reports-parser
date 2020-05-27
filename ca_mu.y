@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "t_Count.h"
 #include "ca_reports.h"
 
 int yylex();
@@ -39,8 +38,9 @@ metadata: command op data               {
                                           free($1); free($3); free($5); free($7);
                                         }
 
-        | END                           { printf("Total reels: %d\n", t_ls.t_Reels);
+        | END                           { printf("Total reels: %d\n", report->total_reels);
                                           printf("Total pages: %d\n", report->newpage);
+                                          ca_total_reels(report);
                                           ca_save_report(report);
                                           ca_free(report);
                                           exit(EXIT_SUCCESS);
@@ -55,7 +55,7 @@ command: PROD_TITL {v_val = PROD_TITL;}
       |  CAMERA    {v_val = CAMERA; }
       |  CODEC     {v_val = CODEC; }
       |  DATE      {v_val = DATE; }
-      |  REEL      {v_val = REEL; t_ls.t_Reels++;}
+      |  REEL      {v_val = REEL; report->total_reels++;}
       |  SCENE     {v_val = SCENE; }
       |  SLATE     {v_val = SLATE; }
       |  CAM_INDEX {v_val = CAM_INDEX; }
@@ -81,7 +81,6 @@ data: META
 %%
 
 int main(void) {
-  t_ls.t_Reels = 0;
   report = new_report();
   return yyparse();
 }
@@ -139,6 +138,8 @@ void check_command(int command_val, char *data) {
       report->camera_index = strdup(data);
       break;
     case CAM_ASSIST:
+      ca_add_assistant(report, data);
+      report->camera_assist = strdup(data);
       break;
   }
 }

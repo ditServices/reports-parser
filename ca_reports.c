@@ -96,6 +96,7 @@ CA_REPORT* new_report() {
     return NULL;
   }
   report->newpage = 1;
+  report->total_reels = 0;
   report->pages = malloc(sizeof(HPDF_Page*) * report->newpage);
   report->pages[0] = HPDF_AddPage(report->pdf);
 
@@ -222,6 +223,17 @@ int ca_add_date(CA_REPORT *report, char *date) {
   return 0;
 }
 
+int ca_add_assistant(CA_REPORT *report, char *data) {
+  int page = report->newpage - 1;
+  HPDF_Page_SetFontAndSize(report->pages[page], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->pages[page]);
+  HPDF_Page_TextOut(report->pages[page], report->col2, report->height - P_NUM_YPOS, "Camera Assistant:");
+  HPDF_Page_TextOut(report->pages[page], report->col2 + 100, report->height - P_NUM_YPOS, data);
+  HPDF_Page_EndText(report->pages[page]);
+  return 0;
+}
+
+
 int ca_add_page(CA_REPORT *report) {
   report->newpage++;
   report->pages = realloc(report->pages, sizeof(HPDF_Page*) * report->newpage);
@@ -233,6 +245,7 @@ int ca_add_page(CA_REPORT *report) {
     ca_draw_header(report, CTABLE_HEADER);
     ca_add_date(report, report->report_date);
     ca_add_cindex(report, report->camera_index);
+    ca_add_assistant(report, report->camera_assist);
     ca_add_pnum(report);
   }
   return 0;
@@ -304,11 +317,24 @@ int ca_add_slate(CA_REPORT *report, char *slate) {
   return 0;
 }
 
+
 /* Write report out to file */
 int ca_save_report(CA_REPORT *report) {
   printf("Saving report\n");
   HPDF_SaveToFile(report->pdf, "report.pdf");
   HPDF_Free(report->pdf);
+  return 0;
+}
+
+int ca_total_reels(CA_REPORT *report) {
+  int page = report->newpage - 1;
+  char t_Reels[4];
+  sprintf(t_Reels, "%d", report->total_reels);
+  HPDF_Page_SetFontAndSize(report->pages[page], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->pages[page]);
+  HPDF_Page_TextOut(report->pages[page], report->col1 + 80, report->height - P_NUM_YPOS, "Total Reels:");
+  HPDF_Page_TextOut(report->pages[page], report->col1 + 150, report->height - P_NUM_YPOS, t_Reels);
+  HPDF_Page_EndText(report->pages[page]);
   return 0;
 }
 
@@ -322,9 +348,10 @@ void ca_free(CA_REPORT *report) {
 
     free(report->pages);
 
-    if(report->report_date && report->camera_index) {
+    if(report->report_date && report->camera_index && report->camera_assist) {
       free(report->report_date);
       free(report->camera_index);
+      free(report->camera_assist);
     }
 
     free(report);
