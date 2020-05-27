@@ -67,10 +67,19 @@ error_handler (HPDF_STATUS error_no, HPDF_STATUS detail_no, void *user_data)
 int ca_add_cindex(CA_REPORT *report, char* cam_index) {
   int page = report->newpage - 1;
   HPDF_Page_SetFontAndSize(report->pages[page], report->font, INDEX_SIZE);
+
+  if((strcmp(cam_index, "A") == 0)) {
+    HPDF_Page_SetRGBFill(report->pages[page], 1, 0, 0);
+  } else if((strcmp(cam_index, "B") == 0)) {
+    HPDF_Page_SetRGBFill(report->pages[page], 0, 0, 1);
+  }
+
   HPDF_Page_BeginText(report->pages[page]);
   HPDF_Page_TextOut(report->pages[page], report->col2 + INDEX_XPOS, report->height - INDEX_YPOS, cam_index);
   HPDF_Page_EndText(report->pages[page]);
   HPDF_Page_SetFontAndSize(report->pages[page], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_SetRGBFill(report->pages[page], 0, 0, 0);
+
   return 0;
 }
 
@@ -232,7 +241,6 @@ int ca_add_assistant(CA_REPORT *report, char *data) {
   HPDF_Page_EndText(report->pages[page]);
   return 0;
 }
-
 
 int ca_add_page(CA_REPORT *report) {
   report->newpage++;
