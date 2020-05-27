@@ -23,6 +23,13 @@ char* duplicate_segment(const char* token, int token_length);
 "_auto"             return AUTO;
 "cam_assistant"     return CAM_ASSIST;
 "cam_index"         return CAM_INDEX;
+"location"          return LOCATION;
+"producing_company" return P_COMPANY;
+"colorspace"        return C_SPACE;
+"colourspace"       return C_SPACE;
+"fps"               return FPS;
+"shutter_angle"     return S_ANGLE;
+
 
 "reel"              return REEL;
 "scene"             return SCENE;

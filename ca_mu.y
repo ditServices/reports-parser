@@ -19,6 +19,7 @@ CA_REPORT *report;
 
 %locations
 %token PROD_TITL _DIR DOP DIT CAM_INDEX CAM_ASSIST FORMAT CAMERA CODEC DATE EQUALS SEP END
+%token LOCATION P_COMPANY C_SPACE FPS S_ANGLE
 %token COLON REEL REEL_ID META AUTO SCENE SCENE_ID SLATE SLATE_ID
 %token TAKE LENS STOP FILTERS MULTI_T
 
@@ -60,6 +61,11 @@ command: PROD_TITL {v_val = PROD_TITL;}
       |  SLATE     {v_val = SLATE; }
       |  CAM_INDEX {v_val = CAM_INDEX; }
       |  CAM_ASSIST {v_val = CAM_ASSIST; }
+      |  LOCATION   {v_val = LOCATION;}
+      |  P_COMPANY  {v_val = P_COMPANY;}
+      |  C_SPACE    {v_val = C_SPACE;}
+      |  FPS        {v_val = FPS; }
+      |  S_ANGLE    {v_val = S_ANGLE; }
       ;
 
 op: EQUALS
@@ -140,6 +146,20 @@ void check_command(int command_val, char *data) {
     case CAM_ASSIST:
       ca_add_assistant(report, data);
       report->camera_assist = strdup(data);
+      break;
+    case LOCATION:
+      ca_add_loc(report, data);
+      break;
+    case P_COMPANY:
+      ca_add_pcomp(report, data);
+      break;
+    case C_SPACE:
+      ca_add_cspace(report, data);
+      break;
+    case FPS:
+      ca_add_fps(report, data);
+      break;
+    case S_ANGLE:
       break;
   }
 }

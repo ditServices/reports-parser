@@ -6,11 +6,14 @@
 #include <string.h>
 
 #define META_LEN 250
-#define META_TOP 90
-#define META_MIDDLE 120
-#define META_BOTTOM 150
 
-#define INDEX_YPOS 40
+#define META_TOP 75
+#define META_TOP_THRD 100
+#define META_MIDDLE 125
+#define META_LOWER_THRD 150
+#define META_BOTTOM 175
+
+#define INDEX_YPOS 45
 #define INDEX_XPOS 200
 
 #define INDEX_SIZE  40
@@ -18,7 +21,7 @@
 #define HEADING_TWO 13
 #define DEFAULT_TEXT_SIZE 10
 
-#define TABLE_HEADER 200
+#define TABLE_HEADER 210
 #define CTABLE_HEADER 70
 #define TABLE_START 230
 #define TB_REEL 5
@@ -140,6 +143,17 @@ int ca_add_pt(CA_REPORT *report, char *pt) {
   return 0;
 }
 
+int ca_add_pcomp(CA_REPORT *report, char *pcomp) {
+  char token[META_LEN] = "Production Company: ";
+  strcat(token, pcomp);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_TOP, token);
+  HPDF_Page_EndText(report->pages[0]);
+  return 0;
+}
+
 /* Add director to report */
 int ca_add_dir(CA_REPORT *report, char *_dir) {
   char token[META_LEN] = "Director: ";
@@ -147,7 +161,7 @@ int ca_add_dir(CA_REPORT *report, char *_dir) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_TOP, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_TOP_THRD, token);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -173,6 +187,16 @@ int ca_add_dit(CA_REPORT *report, char *dit) {
 
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_LOWER_THRD, token);
+  HPDF_Page_EndText(report->pages[0]);
+  return 0;
+}
+
+int ca_add_loc(CA_REPORT *report, char *loc) {
+  char token[META_LEN] = "Location: ";
+  strcat(token, loc);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
   HPDF_Page_BeginText(report->pages[0]);
   HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_BOTTOM, token);
   HPDF_Page_EndText(report->pages[0]);
@@ -215,9 +239,37 @@ int ca_add_codec(CA_REPORT *report, char *codec) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_BOTTOM, token);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_TOP_THRD, token);
   HPDF_Page_EndText(report->pages[0]);
 
+  return 0;
+}
+
+int ca_add_cspace(CA_REPORT *report, char *cspace) {
+  char token[META_LEN] = "Colour Space: ";
+  strcat(token, cspace);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_LOWER_THRD, token);
+  HPDF_Page_EndText(report->pages[0]);
+  return 0;
+}
+
+int ca_add_fps(CA_REPORT *report, char *fps) {
+  char token[META_LEN] = "FPS: ";
+  strcat(token, fps);
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_BOTTOM, token);
+  HPDF_Page_EndText(report->pages[0]);
+  return 0;
+}
+
+int ca_add_sangle(CA_REPORT *report, char *sangle) {
+  char token[META_LEN] = "Shutter Angle:";
+  strcat(token, sangle);
   return 0;
 }
 
@@ -259,7 +311,7 @@ int ca_add_page(CA_REPORT *report) {
   return 0;
 }
 
-/* Table row add function - Need to accomodate for spanning several pages */
+/* Table row add function */
 int ca_add_tablerow(CA_REPORT *report, char *take,
                     char *lens, char *stop, char *filt ) {
 
@@ -279,7 +331,6 @@ int ca_add_tablerow(CA_REPORT *report, char *take,
       ca_add_page(report);
       report->table_row = report->height - 100;
     }
-
 
   return 0;
 }
