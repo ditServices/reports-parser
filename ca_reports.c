@@ -218,6 +218,7 @@ int ca_add_page(CA_REPORT *report) {
     HPDF_Page_SetFontAndSize(report->pages[report->newpage-1], report->font, DEFAULT_TEXT_SIZE);
     ca_draw_header(report, CTABLE_HEADER);
     ca_add_date(report, report->report_date);
+    ca_add_cindex(report, report->camera_index);
   }
   return 0;
 }
@@ -306,8 +307,9 @@ void ca_free(CA_REPORT *report) {
 
     free(report->pages);
 
-    if(report->report_date) {
+    if(report->report_date && report->camera_index) {
       free(report->report_date);
+      free(report->camera_index);
     }
 
     free(report);

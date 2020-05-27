@@ -136,6 +136,7 @@ void check_command(int command_val, char *data) {
     case CAM_INDEX:
       printf("Camera Index: %s\n", data);
       ca_add_cindex(report, data);
+      report->camera_index = strdup(data);
       break;
     case CAM_ASSIST:
       break;

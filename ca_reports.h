@@ -4,8 +4,13 @@
 #include "hpdf.h"
 
 typedef struct CA_REPORT {
+  /*page count*/
   int newpage;
+  /* Save data we need for other pages */
   char *report_date;
+  char *camera_index;
+  char *camera_assist;
+  /* report creation objects */
   HPDF_Doc pdf;
   HPDF_Font font;
   HPDF_Page *pages;
