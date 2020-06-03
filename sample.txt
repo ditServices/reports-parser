@@ -1,16 +1,22 @@
 /* This is a comment */
 
-production_title = "War of The Worlds S1"
-director         = "Craig Viveiros"
-DOP              = "Milos Moore"
-DIT              = "Alex Beards"
+production_title = "Film"
+director         = "Craig Matthews"
+DOP              = "Milos Jarman"
+DIT              = "Alex Smith"
 format           = "16:9"
 camera           = "Arri Alexa"
 codec            = "ProRes 4444"
 date             = "18/07/2020"
 
+location         = "Studio"
+producing_company = "Films"
+colorspace        = "LOG-C"
+fps               = "25"
+shutter_angle     = "180"
+
 cam_index        = "A"
-cam_assistant    = "Peter Lowden"
+cam_assistant    = "Peter Jones"
 
 reel: A001
  scene: 2/22a
