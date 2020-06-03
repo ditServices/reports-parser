@@ -38,8 +38,10 @@ int ca_add_loc(CA_REPORT *report, char *loc);
 int ca_add_pcomp(CA_REPORT *report, char *pcomp);
 int ca_add_cspace(CA_REPORT *report, char *cspace);
 int ca_add_fps(CA_REPORT *report, char *fps);
-int ca_add_sangle(CA_REPORT *report, char *sangle);
 
+/* Implementation Needed */
+int ca_add_sangle(CA_REPORT *report, char *sangle);
+int ca_add_flines(CA_REPORT *report, char *flines);
 
 int ca_add_reel(CA_REPORT *report, char *reel);
 int ca_add_scene(CA_REPORT *report, char *scene);
@@ -50,6 +52,7 @@ int ca_add_tablerow(CA_REPORT *report, char *take,
                     char *lens, char *stop, char *filt);
 int ca_total_reels(CA_REPORT *report);
 int ca_add_assistant(CA_REPORT *report, char *data);
+
 /* grid drawing methods for metadata table
  * and additional pages */
 int ca_draw_meta_grid(HPDF_Doc pdf, HPDF_Page page);

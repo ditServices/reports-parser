@@ -19,7 +19,7 @@ CA_REPORT *report;
 
 %locations
 %token PROD_TITL _DIR DOP DIT CAM_INDEX CAM_ASSIST FORMAT CAMERA CODEC DATE EQUALS SEP END
-%token LOCATION P_COMPANY C_SPACE FPS S_ANGLE
+%token LOCATION P_COMPANY C_SPACE FPS S_ANGLE F_LINES
 %token COLON REEL REEL_ID META AUTO SCENE SCENE_ID SLATE SLATE_ID
 %token TAKE LENS STOP FILTERS MULTI_T
 
@@ -66,6 +66,7 @@ command: PROD_TITL {v_val = PROD_TITL;}
       |  C_SPACE    {v_val = C_SPACE;}
       |  FPS        {v_val = FPS; }
       |  S_ANGLE    {v_val = S_ANGLE; }
+      |  F_LINES    {v_val = F_LINES; }
       ;
 
 op: EQUALS
@@ -159,7 +160,9 @@ void check_command(int command_val, char *data) {
     case FPS:
       ca_add_fps(report, data);
       break;
-    case S_ANGLE:
+    case S_ANGLE:    /* Re structure PDF layout to accomodate for S_ANGLE and F_LINES */
+      break;
+    case F_LINES:
       break;
   }
 }

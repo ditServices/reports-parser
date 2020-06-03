@@ -267,9 +267,15 @@ int ca_add_fps(CA_REPORT *report, char *fps) {
   return 0;
 }
 
+
+/* Implementation Needed */
 int ca_add_sangle(CA_REPORT *report, char *sangle) {
   char token[META_LEN] = "Shutter Angle:";
   strcat(token, sangle);
+  return 0;
+}
+
+int ca_add_flines(CA_REPORT *report, char *flines) {
   return 0;
 }
 

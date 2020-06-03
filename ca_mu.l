@@ -29,6 +29,7 @@ char* duplicate_segment(const char* token, int token_length);
 "colourspace"       return C_SPACE;
 "fps"               return FPS;
 "shutter_angle"     return S_ANGLE;
+"framelines"        return F_LINES;
 
 
 "reel"              return REEL;
