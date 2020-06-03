@@ -4,6 +4,7 @@
 #include <setjmp.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #define META_LEN 250
 
@@ -385,8 +386,44 @@ int ca_add_slate(CA_REPORT *report, char *slate) {
 
 /* Write report out to file */
 int ca_save_report(CA_REPORT *report) {
+  FILE *output;
+  char dir[50] = "/home/";
+  strcat(dir, getlogin());
+  strcat(dir, "/Desktop");
+
+  chdir(dir);
+  char cwd[50];
+  getcwd(cwd, sizeof(cwd));
+
+  printf("CWD %s\n",cwd);
+
+  output = fopen("report.pdf", "w");
+
+  if(output == NULL) {
+    printf("error opening file\n");
+    return 1;
+  }
   printf("Saving report\n");
-  HPDF_SaveToFile(report->pdf, "report.pdf");
+  HPDF_SaveToStream (report->pdf);
+  fprintf (stderr, "the size of data is %d\n", HPDF_GetStreamSize(report->pdf));
+
+  HPDF_ResetStream (report->pdf); /* rewind the stream. */
+
+  for(;;) {
+    HPDF_BYTE buf[4096];
+     HPDF_UINT32 siz = 4096;
+     HPDF_STATUS ret = HPDF_ReadFromStream (report->pdf, buf, &siz);
+
+     if (siz == 0)
+         break;
+
+     if (fwrite (buf, siz, 1, output) != 1) {
+         fprintf (stderr, "cannot write to stdout");
+         break;
+     }
+  }
+
+  fclose(output);
   HPDF_Free(report->pdf);
   return 0;
 }
@@ -405,7 +442,6 @@ int ca_total_reels(CA_REPORT *report) {
 
 /* Ensure that memory is freed needs to iterate over each dynamically allocated page */
 void ca_free(CA_REPORT *report) {
-    printf("Freeing memory\n");
 
     for(int i=0; i < report->newpage; i++) {
         free(report->pages[i]);
