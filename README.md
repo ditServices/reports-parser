@@ -5,3 +5,14 @@ This project defines a simple markup language for camera assistants that can be 
 Currently in active development, not all features are active.
 
 ![](https://i.imgur.com/d6TANDK.png)
+
+# Build instructions
+
+Ensure that you have Haru PDF installed to `/usr/local/lib/`
+As well as Flex and Bison 3.6
+
+Then run:
+
+```
+make
+```

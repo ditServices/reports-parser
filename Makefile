@@ -1,7 +1,9 @@
 SRCS = ca_mu.tab.c lex.yy.c ca_reports.c grids.c
+HARU = /usr/local/lib/libhpdfs.a
+LDFLAGS = -lz -lm
 
 all: $(SRCS)
-	cc $(SRCS) lib/libharu/cmake/src/libhpdfs.a -lm -lz -o build/camu
+	cc $(SRCS) $(HARU) $(LDFLAGS) -o build/camu
 
 lex.yy.c: ca_mu.l
 	flex ca_mu.l
