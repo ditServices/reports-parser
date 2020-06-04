@@ -443,11 +443,7 @@ int ca_total_reels(CA_REPORT *report) {
 /* Ensure that memory is freed needs to iterate over each dynamically allocated page */
 void ca_free(CA_REPORT *report) {
 
-    for(int i=0; i < report->newpage; i++) {
-        free(report->pages[i]);
-    }
-
-    free(report->pages);
+    free(report->pages); // Check this...
 
     if(report->report_date && report->camera_index && report->camera_assist) {
       free(report->report_date);
