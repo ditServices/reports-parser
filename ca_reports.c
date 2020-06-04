@@ -124,6 +124,11 @@ CA_REPORT* new_report() {
   report->col2 = report->width / 2;
   report->col2 + 100;
   report->table_row = report->height - TABLE_START;
+
+  report->report_date = NULL;
+  report->camera_index = NULL;
+  report->camera_assist = NULL;
+
   ca_draw_header(report, TABLE_HEADER);
   ca_add_pnum(report);
   return report;
@@ -445,11 +450,9 @@ void ca_free(CA_REPORT *report) {
 
     free(report->pages); // Check this...
 
-    if(report->report_date && report->camera_index && report->camera_assist) {
-      free(report->report_date);
-      free(report->camera_index);
-      free(report->camera_assist);
-    }
+    if(report->report_date) free(report->report_date);
+    if(report->camera_index) free(report->camera_index);
+    if(report->camera_assist) free(report->camera_assist);
 
     free(report);
 }
