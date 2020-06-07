@@ -4,6 +4,8 @@ __Donate to this project to keep it alive.__
 
 <noscript><a href="https://liberapay.com/hdcdigi/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a></noscript>
 
+[![Build Status](https://travis-ci.com/ditServices/reports-parser.svg?branch=master)](https://travis-ci.com/ditServices/reports-parser)
+
 __Public Roadmap__
 https://trello.com/b/DEhIf5Hp/careports-roadmap
 
