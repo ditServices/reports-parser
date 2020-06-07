@@ -8,7 +8,8 @@ before_script:
   - cmake ..
   - make
   - sudo make install
-  - cd ~/
+  - cd ..
+  - cd ..
 
 
 compiler:
