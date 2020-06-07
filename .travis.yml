@@ -1,11 +1,17 @@
 language: c
-addons:
-        apt:
-                packages:
-                        - libhpdf-dev
+
+before_script:
+  - git clone https://github.com/libharu/libharu
+  - cd libharu
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+  - make install
+
 
 compiler:
-        - clang
-        - gcc
+  - clang
+  - gcc
 
 script: make
