@@ -7,7 +7,7 @@ __Donate to this project to keep it alive.__
 __Public Roadmap__
 https://trello.com/b/DEhIf5Hp/careports-roadmap
 
-This project defines a simple markup language for camera assistants that can be parsed into a PDF report. This application defines the grammar and includes the code to generate the PDF report.
+This project defines a simple markup language for camera assistants that can be parsed into a PDF report. This application defines the grammar and includes the code to generate the PDF report. An example of the markup language can be found in the sample.txt file in the repo.
 
 Currently in active development, not all features are active.
 
