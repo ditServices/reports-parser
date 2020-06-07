@@ -1,0 +1,9 @@
+language: c
+addons:
+        apt:
+                packages:
+                        - libhpdf-dev
+
+compiler:
+        - clang
+        - gcc
