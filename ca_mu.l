@@ -20,8 +20,6 @@
 #include <string.h>
 #include "ca_mu.tab.h"
 #include "ca_reports.h"
-extern void ca_free(CA_REPORT *report);
-extern CA_REPORT *report;
 char* duplicate_segment(const char* token, int token_length);
 %}
 
@@ -53,7 +51,7 @@ char* duplicate_segment(const char* token, int token_length);
 "scene"             return SCENE;
 "slate"             return SLATE;
 
-"exit"              {ca_free(report); exit(EXIT_SUCCESS);}
+"exit"              return EXIT;
 "END"               return END;
 
 

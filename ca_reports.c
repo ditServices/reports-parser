@@ -139,7 +139,7 @@ CA_REPORT* new_report() {
   report->col1 = report->width / 2;
   report->col1 = report->col1 - report->col1 + 50;
   report->col2 = report->width / 2;
-  report->col2 + 100;
+  report->col2 + 100;                                  /* Check This */
   report->table_row = report->height - TABLE_START;
 
   report->report_date = NULL;
@@ -465,7 +465,7 @@ int ca_total_reels(CA_REPORT *report) {
 /* Ensure that memory is freed needs to iterate over each dynamically allocated page */
 void ca_free(CA_REPORT *report) {
 
-    free(report->pages); // Check this...
+    free(report->pages);
 
     if(report->report_date) free(report->report_date);
     if(report->camera_index) free(report->camera_index);

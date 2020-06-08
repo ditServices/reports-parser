@@ -38,7 +38,7 @@ CA_REPORT *report;
 %token PROD_TITL _DIR DOP DIT CAM_INDEX CAM_ASSIST FORMAT CAMERA CODEC DATE EQUALS SEP END
 %token LOCATION P_COMPANY C_SPACE FPS S_ANGLE F_LINES
 %token COLON REEL REEL_ID META AUTO SCENE SCENE_ID SLATE SLATE_ID
-%token TAKE LENS STOP FILTERS MULTI_T
+%token TAKE LENS STOP FILTERS MULTI_T EXIT
 
 %%
 
@@ -60,6 +60,10 @@ metadata: command op data               {
                                           printf("Total pages: %d\n", report->newpage);
                                           ca_total_reels(report);
                                           ca_save_report(report);
+                                          ca_free(report);
+                                          exit(EXIT_SUCCESS);
+                                        }
+        | EXIT                          { printf("Exiting\n");
                                           ca_free(report);
                                           exit(EXIT_SUCCESS);
                                         }
