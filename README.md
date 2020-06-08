@@ -40,3 +40,6 @@ Then run:
 ```
 make
 ```
+
+__Documentation and additional information:__
+[https://digitalimagingtech.co.uk/posts/digital-camera-reports/](https://digitalimagingtech.co.uk/posts/digital-camera-reports/)
