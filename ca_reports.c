@@ -139,7 +139,7 @@ CA_REPORT* new_report() {
   report->col1 = report->width / 2;
   report->col1 = report->col1 - report->col1 + 50;
   report->col2 = report->width / 2;
-  report->col2 + 100;                                  /* Check This */
+  //report->col2 + 100;                                  /* Check This */
   report->table_row = report->height - TABLE_START;
 
   report->report_date = NULL;
