@@ -409,11 +409,20 @@ int ca_add_slate(CA_REPORT *report, char *slate) {
 /* Write report out to file */
 int ca_save_report(CA_REPORT *report) {
   FILE *output;
-  char dir[50] = "/home/";
-  strcat(dir, getlogin());
-  strcat(dir, "/Desktop");
 
-  chdir(dir);
+  #ifdef __linux__
+    char dir[50] = "/home/";
+    strcat(dir, getlogin());
+    strcat(dir, "/Desktop");
+    chdir(dir);
+  #endif
+  #ifdef __APPLE__
+    char dir[50] = "/Users/";
+    strcat(dir, getlogin());
+    strcat(dir, "/Desktop");
+    chdir(dir);
+  #endif
+
   char cwd[50];
   getcwd(cwd, sizeof(cwd));
 
