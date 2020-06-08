@@ -356,7 +356,7 @@ int ca_add_tablerow(CA_REPORT *report, char *take,
     HPDF_Page_EndText(report->pages[page]);
     report->table_row = report->table_row - 20;
 
-    if(report->table_row < 150) {
+    if(report->table_row < 100) {
       ca_add_page(report);
       report->table_row = report->height - 100;
     }
