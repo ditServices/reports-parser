@@ -57,6 +57,7 @@ char* duplicate_segment(const char* token, int token_length);
 
 \"[^"\n]*["\n]              {yylval = duplicate_segment(yytext+1, yyleng -2); return META;}
 [aA-aZ][0-9]+               {yylval = strdup(yytext); return REEL_ID;}
+[aA-aZ][0-9]+:[0-9]{4}      {yylval = strdup(yytext); return REEL_ID;}
 ([0-9aA-zZ]*\/[0-9aA-zZ]*)  {yylval = strdup(yytext); return SCENE_ID;}
 [0-9]+                      {yylval = strdup(yytext); return SLATE_ID;}
 [0-9][aA-zZ]+               {yylval = strdup(yytext); return TAKE;}

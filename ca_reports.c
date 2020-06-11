@@ -43,12 +43,12 @@
 #define CTABLE_HEADER 70
 #define TABLE_START 230
 #define TB_REEL 5
-#define TB_SCENE 40
-#define TB_SLATE 85
-#define TB_TAKE 125
-#define TB_LENS 165
-#define TB_STOP 205
-#define TB_FILTERS 245
+#define TB_SCENE 75
+#define TB_SLATE 120
+#define TB_TAKE 160
+#define TB_LENS 200
+#define TB_STOP 247
+#define TB_FILTERS 280
 
 #define P_NUM_YPOS 800
 
