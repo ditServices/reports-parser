@@ -182,8 +182,10 @@ void check_command(int command_val, char *data) {
       ca_add_fps(report, data);
       break;
     case S_ANGLE:    /* Re structure PDF layout to accomodate for S_ANGLE and F_LINES */
+      ca_add_sangle(report, data);
       break;
     case F_LINES:
+      ca_add_flines(report, data);
       break;
   }
 }

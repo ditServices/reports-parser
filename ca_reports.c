@@ -26,10 +26,12 @@
 #define META_LEN 250
 
 #define META_TOP 75
-#define META_TOP_THRD 100
-#define META_MIDDLE 125
-#define META_LOWER_THRD 150
-#define META_BOTTOM 175
+#define META_TOP_THRD 95
+#define META_MIDDLE 115
+#define META_LOWER_THRD 135
+#define META_BOTTOM 155
+
+#define META_CAMERA_SETTINGS 160
 
 #define INDEX_YPOS 45
 #define INDEX_XPOS 200
@@ -184,7 +186,7 @@ int ca_add_dir(CA_REPORT *report, char *_dir) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_TOP_THRD, token);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_TOP, token);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -198,7 +200,7 @@ int ca_add_dop(CA_REPORT *report, char *dop) {
 
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_MIDDLE, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_TOP_THRD, token);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -211,7 +213,7 @@ int ca_add_dit(CA_REPORT *report, char *dit) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_LOWER_THRD, token);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_TOP_THRD, token);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -221,7 +223,7 @@ int ca_add_loc(CA_REPORT *report, char *loc) {
   strcat(token, loc);
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_BOTTOM, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_MIDDLE, token);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -234,7 +236,7 @@ int ca_add_cam(CA_REPORT *report, char *cam) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_TOP, token);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_MIDDLE, token);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -247,7 +249,7 @@ int ca_add_frmt(CA_REPORT *report, char *frmt) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_MIDDLE, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_CAMERA_SETTINGS, token);
   HPDF_Page_EndText(report->pages[0]);
 
   return 0;
@@ -262,7 +264,7 @@ int ca_add_codec(CA_REPORT *report, char *codec) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_TOP_THRD, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + 65, report->height - META_CAMERA_SETTINGS, token);
   HPDF_Page_EndText(report->pages[0]);
 
   return 0;
@@ -274,7 +276,7 @@ int ca_add_cspace(CA_REPORT *report, char *cspace) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_LOWER_THRD, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + 170, report->height - META_CAMERA_SETTINGS, token);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -285,7 +287,7 @@ int ca_add_fps(CA_REPORT *report, char *fps) {
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
 
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_BOTTOM, token);
+  HPDF_Page_TextOut(report->pages[0], report->col2 + 30, report->height - META_CAMERA_SETTINGS, token);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -293,12 +295,27 @@ int ca_add_fps(CA_REPORT *report, char *fps) {
 
 /* Implementation Needed */
 int ca_add_sangle(CA_REPORT *report, char *sangle) {
-  char token[META_LEN] = "Shutter Angle:";
+  char token[META_LEN] = "Shutter Angle: ";
   strcat(token, sangle);
+
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2 + 80, report->height - META_CAMERA_SETTINGS, token);
+  HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
 int ca_add_flines(CA_REPORT *report, char *flines) {
+  char token[META_LEN] = "Frame Lines: ";
+  strcat(token, flines);
+
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2 + 175, report->height - META_CAMERA_SETTINGS, token);
+  HPDF_Page_EndText(report->pages[0]);
+  return 0;
   return 0;
 }
 

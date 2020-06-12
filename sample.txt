@@ -14,11 +14,11 @@ producing_company = "Films"
 colorspace        = "LOG-C"
 fps               = "25"
 shutter_angle     = "180"
-
+framelines        = "2:35"
 cam_index        = "A"
 cam_assistant    = "Peter Jones"
 
-reel: A001
+reel: A001:3322
  scene: 2/22a
    slate: 001
      1-5, 32MM, T1.9, {5600K ND.3 800EI}
@@ -38,7 +38,7 @@ reel: A001
   slate: 006
      1-3, 50MM, T1.9, {3200K BPM 1/8 *DAY FOR NIGHT*}
 
-reel: A002
+reel: A002:4433
     slate: 007
       1-2, 24MM, T1.9, {3200K, BPM 1/8}
     slate: 008
