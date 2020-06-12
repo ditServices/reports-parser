@@ -16,7 +16,7 @@ endif
 
 ifeq ($(UNAME), Darwin)
 ca_mu.tab.c: ca_mu.y
-	usr/local/Cellar/bison/3.6.3/bin/bison -d ca_mu.y
+	/usr/local/Cellar/bison/3.6.3/bin/bison -d ca_mu.y
 endif
 
 clean:
