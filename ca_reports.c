@@ -31,6 +31,7 @@
 #define META_LOWER_THRD 135
 #define META_BOTTOM 155
 
+#define META_CAMERA_HEADINGS 145
 #define META_CAMERA_SETTINGS 160
 
 #define INDEX_YPOS 45
@@ -40,10 +41,11 @@
 #define HEADING_ONE 20
 #define HEADING_TWO 13
 #define DEFAULT_TEXT_SIZE 10
+#define SMALL_TEXT 8
 
-#define TABLE_HEADER 210
+#define TABLE_HEADER 200
 #define CTABLE_HEADER 70
-#define TABLE_START 230
+#define TABLE_START 220
 #define TB_REEL 5
 #define TB_SCENE 75
 #define TB_SLATE 120
@@ -243,13 +245,16 @@ int ca_add_cam(CA_REPORT *report, char *cam) {
 
 /* Add camera format to report */
 int ca_add_frmt(CA_REPORT *report, char *frmt) {
-  char token[META_LEN] = "Format: ";
-  strcat(token, frmt);
+  char token[] = "Format: ";
+
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, SMALL_TEXT);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_CAMERA_HEADINGS, token);
+  HPDF_Page_EndText(report->pages[0]);
 
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
-
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_CAMERA_SETTINGS, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1, report->height - META_CAMERA_SETTINGS, frmt);
   HPDF_Page_EndText(report->pages[0]);
 
   return 0;
@@ -258,36 +263,47 @@ int ca_add_frmt(CA_REPORT *report, char *frmt) {
 /* Add codec to report */
 int ca_add_codec(CA_REPORT *report, char *codec) {
 
-  char token[META_LEN] = "Codec: ";
-  strcat(token, codec);
+  char token[] = "Codec: ";
+
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, SMALL_TEXT);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + 65, report->height - META_CAMERA_HEADINGS, token);
+  HPDF_Page_EndText(report->pages[0]);
 
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
-
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1 + 65, report->height - META_CAMERA_SETTINGS, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + 65, report->height - META_CAMERA_SETTINGS, codec);
   HPDF_Page_EndText(report->pages[0]);
 
   return 0;
 }
 
 int ca_add_cspace(CA_REPORT *report, char *cspace) {
-  char token[META_LEN] = "Colour Space: ";
-  strcat(token, cspace);
-  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+  char token[] = "Colour Space: ";
 
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, SMALL_TEXT);
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col1 + 170, report->height - META_CAMERA_SETTINGS, token);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + 160, report->height - META_CAMERA_HEADINGS, token);
+  HPDF_Page_EndText(report->pages[0]);
+
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col1 + 160, report->height - META_CAMERA_SETTINGS, cspace);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
 int ca_add_fps(CA_REPORT *report, char *fps) {
-  char token[META_LEN] = "FPS: ";
-  strcat(token, fps);
-  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+  char token[] = "FPS: ";
 
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, SMALL_TEXT);
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2 + 30, report->height - META_CAMERA_SETTINGS, token);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_CAMERA_HEADINGS, token);
+  HPDF_Page_EndText(report->pages[0]);
+
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2, report->height - META_CAMERA_SETTINGS, fps);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
@@ -295,25 +311,31 @@ int ca_add_fps(CA_REPORT *report, char *fps) {
 
 /* Implementation Needed */
 int ca_add_sangle(CA_REPORT *report, char *sangle) {
-  char token[META_LEN] = "Shutter Angle: ";
-  strcat(token, sangle);
+  char token[] = "Shutter Angle: ";
+
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, SMALL_TEXT);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2 + 80, report->height - META_CAMERA_HEADINGS, token);
+  HPDF_Page_EndText(report->pages[0]);
 
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
-
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2 + 80, report->height - META_CAMERA_SETTINGS, token);
+  HPDF_Page_TextOut(report->pages[0], report->col2 + 80, report->height - META_CAMERA_SETTINGS, sangle);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
 }
 
 int ca_add_flines(CA_REPORT *report, char *flines) {
-  char token[META_LEN] = "Frame Lines: ";
-  strcat(token, flines);
+  char token[] = "Frame Lines: ";
+
+  HPDF_Page_SetFontAndSize(report->pages[0], report->font, SMALL_TEXT);
+  HPDF_Page_BeginText(report->pages[0]);
+  HPDF_Page_TextOut(report->pages[0], report->col2 + 175, report->height - META_CAMERA_HEADINGS, token);
+  HPDF_Page_EndText(report->pages[0]);
 
   HPDF_Page_SetFontAndSize(report->pages[0], report->font, DEFAULT_TEXT_SIZE);
-
   HPDF_Page_BeginText(report->pages[0]);
-  HPDF_Page_TextOut(report->pages[0], report->col2 + 175, report->height - META_CAMERA_SETTINGS, token);
+  HPDF_Page_TextOut(report->pages[0], report->col2 + 175, report->height - META_CAMERA_SETTINGS, flines);
   HPDF_Page_EndText(report->pages[0]);
   return 0;
   return 0;
