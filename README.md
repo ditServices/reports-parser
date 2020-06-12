@@ -13,7 +13,7 @@ This project defines a simple markup language for camera assistants that can be 
 
 Currently in active development, not all features are active.
 
-![](https://i.imgur.com/d6TANDK.png)
+![](https://imgur.com/GhoNq0R)
 
 # Build instructions
 
